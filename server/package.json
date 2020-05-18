@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "mongod": "call \"C:\\Program Files\\MongoDB\\Server\\4.2\\bin\\mongod.exe\" --dbpath=\"c:\\data\\db\"",
+    "mongodb": "call \"C:\\Program Files\\MongoDB\\Server\\4.2\\bin\\mongod.exe\" --dbpath=\"c:\\data\\db\"",
     "start": "node server.js"
   },
   "keywords": [],
