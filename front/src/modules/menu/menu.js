@@ -13,7 +13,7 @@ export default class Menu extends React.Component {
         return (
             <SwipeableLeftMenu width={250}>
                 <Box m={2}>
-                    <Avatar src={settings.icon} style={{width: 100, height: 100}}/>
+                    <Avatar src="/icon.jpg" style={{width: 100, height: 100}}/>
                     <Typography variant="body1" color="textPrimary" noWrap>{settings.title}</Typography>
                     <Typography variant="body2" color="textSecondary" noWrap>{settings.subtitle}</Typography>
                 </Box>

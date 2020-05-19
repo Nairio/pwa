@@ -6,13 +6,14 @@ import Header from "../../header/header";
 import GoHome from "../../header/go-home";
 import HeaderTitle from "../../header/header-title";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import AddIcon  from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add';
 import {Avatar, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from '@material-ui/icons/Edit';
 import FabRightBottom from "../../templates/fab-right-bottom";
 import {Field, Form} from "../../templates/form";
 import Search from "../../header/search";
+import {request} from "../../features/request";
 
 
 export default class VirtualListPage extends React.Component {
@@ -39,7 +40,7 @@ export default class VirtualListPage extends React.Component {
     }
 
     onCreate() {
-        const item = {id: Math.random().toString(16).slice(2)};
+        const item = {_id: Math.random().toString(16).slice(2)};
         this.setState({open: true, isAdd: true, item})
     }
 
@@ -48,22 +49,52 @@ export default class VirtualListPage extends React.Component {
     }
 
     onAdd(item) {
+        item = {...item, added: true};
         const index = this.state.data.length;
         const data = this.state.data.concat(item);
         this.setState({open: false, data, index});
+
+        request("add", {col: "data", item: {...item, added: undefined}}).then(({ok, _id}) => {
+            if (ok === 1) {
+                delete item.added;
+                const index = this.state.data.findIndex(({_id}) => _id === item._id);
+                const data = this.state.data.map((d) => d._id === item._id ? {...item, _id} : d);
+                this.setState({data, index});
+            }
+        });
     }
 
     onChange(item) {
-        const index = this.state.data.findIndex(({id}) => id === item.id);
-        const data = this.state.data.map((d) => d.id === item.id ? item : d);
+        item = {...item, modified: true};
+        const index = this.state.data.findIndex(({_id}) => _id === item._id);
+        const data = this.state.data.map((d) => d._id === item._id ? item : d);
         this.setState({open: false, data, index});
+
+        request("change", {col: "data", item: {...item, modified: undefined}}).then(({ok}) => {
+            if (ok === 1) {
+                delete item.modified;
+                const index = this.state.data.findIndex(({_id}) => _id === item._id);
+                const data = this.state.data.map((d) => d._id === item._id ? item : d);
+                this.setState({data, index});
+            }
+        });
     }
 
     onDelete(item) {
         if (!window.confirm(`Удалить "${item.title}"?`)) return;
-        const index = this.state.data.findIndex(({id}) => id === item.id);
-        const data = this.state.data.filter(({id}) => id !== item.id);
+        item = {...item, deleted: true};
+        const index = this.state.data.findIndex(({_id}) => _id === item._id);
+        const data = this.state.data.map((d) => d._id === item._id ? item : d);
         this.setState({open: false, data, index});
+
+        request("delete", {col: "data", item: {...item, deleted: undefined}}).then(({ok}) => {
+            if (ok === 1) {
+                delete item.deleted;
+                const index = this.state.data.findIndex(({_id}) => _id === item._id);
+                const data = this.state.data.filter(({_id}) => _id !== item._id);
+                this.setState({data, index});
+            }
+        });
     }
 
     filter(data, term) {
@@ -71,7 +102,7 @@ export default class VirtualListPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8000/data/").then(res => res.json()).then(data => this.setState({data}))
+        request("getAll", {col: "data"}).then(data => this.setState({data}))
     }
 
     render() {
@@ -91,7 +122,7 @@ export default class VirtualListPage extends React.Component {
                             <FlexBox middle center>
                                 <Form item={item} onSubmit={item => isAdd ? this.onAdd(item) : this.onChange(item)}>
                                     <Field id="img" type="image" title="Иконка"/>
-                                    <Field id="id" type="disabled" title="Идентификатор"/>
+                                    <Field id="_id" type="disabled" title="Идентификатор"/>
                                     <Field id="title" type="text" title="Название"/>
                                     <Field id="text" type="text" title="Текст"/>
                                 </Form>
@@ -104,9 +135,9 @@ export default class VirtualListPage extends React.Component {
                         index={index}
                         divider="inset"
                         template={(item) => (
-                            <ListItem button alignItems="flex-start">
+                            <ListItem button alignItems="flex-start" style={{background: (item.added && "green") || (item.modified && "yellow") || (item.deleted && "red") || "white"}}>
                                 {item.img && <ListItemAvatar><Avatar src={item.img}/></ListItemAvatar>}
-                                <ListItemText inset={!item.img} primary={`${item.title} ${item.text}`} secondary={item.id}/>
+                                <ListItemText inset={!item.img} primary={`${item.title} ${item.text}`} secondary={item._id}/>
                                 <IconButton onClick={() => this.onEdit(item)}><EditIcon/></IconButton>
                             </ListItem>
                         )}

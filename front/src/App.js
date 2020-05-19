@@ -54,7 +54,7 @@ const {name, email} = storage("auth");
 class App extends React.Component {
     render() {
         return (
-            <PWA icon="/icon.jpg" title="Progressive" subtitle="PWA" server="http://localhost:5000">
+            <PWA appId="pwa" title="Progressive" subtitle="PWA" server="http://localhost:8000">
                 <Page title="Главная" path="/" component={Index}/>
 
                 {email ? (

@@ -19,7 +19,7 @@ export default class Card extends React.Component {
                 <FlexBox middle center>
                     <MUICard style={{width:200}}>
                         <CardActionArea>
-                            <CardMedia component="img" alt="" image={settings.icon} title=""/>
+                            <CardMedia component="img" alt="" image="/icon.jpg" title=""/>
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="h2">{settings.title}</Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">{settings.subtitle} </Typography>

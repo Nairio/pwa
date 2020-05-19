@@ -2,18 +2,18 @@ const config = require("./config");
 const MongoClient = require("mongodb").MongoClient;
 
 let error = false;
-let db = false;
+let client = false;
 
-MongoClient.connect(config.mongodbURL, {useUnifiedTopology: true}, (err, client) => {
+MongoClient.connect(config.mongodbURL, {useUnifiedTopology: true}, (err, cl) => {
     if (err) return error = err;
-    db = client.db(config.dbName);
+    client = cl;
 });
 
 module.exports = (app, success) => {
-    app.use((req, res, next) => {
-        if (!db && !error) return res.send("Connecting to MongoDB...");
+    app.use(({body: {appId}}, res, next) => {
+        if (!client && !error) return res.send("Connecting to MongoDB...");
         if (error) return res.send("MongoDB error");
-        success(db);
+        success(client.db(appId));
         next()
     })
 };

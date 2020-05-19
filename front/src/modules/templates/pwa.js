@@ -38,7 +38,7 @@ export class PWA extends React.Component {
         })(page.props));
         this.routes.push(<Route key={pages.length} status={404} render={() => <Header><GoHome/><HeaderTitle>Error 404</HeaderTitle></Header>}/>);
 
-        settings.icon = this.props.icon;
+        settings.appId = this.props.appId;
         settings.title = this.props.title;
         settings.subtitle = this.props.subtitle;
         settings.server = this.props.server;
