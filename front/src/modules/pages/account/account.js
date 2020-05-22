@@ -5,25 +5,27 @@ import HeaderTitle from "../../header/header-title";
 import {storage} from "../../features/localstorage";
 import {settings} from "../../features/settings";
 import Header from "../../header/header";
+import {getClientId} from "../../features/client";
 
 export default class Account extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {loading: false, error: false, auth: storage("auth") || {}};
-        this.props.onSubmit(async (data, status = () => {}) => {
-            status("start");
-
+        this.props.onSubmit(async (data, answer = () => {}) => {
             try {
-                const res = await fetch(settings.server, {method: "POST", body: JSON.stringify({...data, token: this.state.auth.token})});
-                const json = await res.json();
-                const {token, name = data.name, email = data.email} = json;
+                const clientId = getClientId();
+                const {ok, name, email} = await (await fetch(settings.server, {method: "POST", body: JSON.stringify({...this.state.auth, ...data, appId: "auth", clientId})})).json();
 
-                if (token && ["register", "login"].includes(data.type)) storage("auth", {name, email, token});
-                if (["logout"].includes(data.type)) storage("auth", false);
+                if (["register", "login"].includes(data.type)) storage("auth", {name, email});
+                if (["logout"].includes(data.type)) storage("auth", false, getClientId(true));
 
-                status("success");
+                answer(ok);
+                this.props.onChange(ok);
+                console.log({ok});
             } catch (e) {
-                status("error");
+                answer({ok: 0});
+                this.props.onChange(0);
+                console.log({ok: 0});
             }
         });
     }

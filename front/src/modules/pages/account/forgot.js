@@ -10,12 +10,12 @@ import Container from '@material-ui/core/Container';
 export default class Forgot extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state={email: "", type: "forgot"};
+        this.state = {email: "", type: "forgot", ok: false, error: false};
         this.answer = this.answer.bind(this);
     }
 
-    answer(data) {
-        console.log(data)
+    answer(ok) {
+        this.setState({ok, error: !ok});
     }
 
 
@@ -26,10 +26,10 @@ export default class Forgot extends React.Component {
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <Avatar><LockOutlinedIcon/></Avatar>
                         <Typography component="h1" variant="h5">Восстановление пароля</Typography>
-                        <form onSubmit={e => e.preventDefault() || this.props.submit(this.state, this.answer)}>
-                            <TextField variant="outlined" margin="normal" required fullWidth label="Email" name="email" autoComplete="email" onChange={e => this.setState({email: e.target.value})}/>
+                        {this.state.ok ? "Пароль отправлен на email" : <form onSubmit={e => e.preventDefault() || this.props.submit(this.state, this.answer)}>
+                            <TextField error={this.state.error} required fullWidth label="Email" onChange={e => this.setState({email: e.target.value})}/>
                             <Button type="submit" fullWidth variant="contained" color="primary" style={{margin: "16px 0"}}>Отправить</Button>
-                        </form>
+                        </form>}
                     </div>
                 </Container>
             </FlexBox>

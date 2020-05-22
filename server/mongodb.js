@@ -13,7 +13,7 @@ module.exports = (app, success) => {
     app.use(({body: {appId}}, res, next) => {
         if (!client && !error) return res.send("Connecting to MongoDB...");
         if (error) return res.send("MongoDB error");
-        success(client.db(appId));
+        success(client);
         next()
     })
 };

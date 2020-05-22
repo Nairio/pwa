@@ -14,16 +14,18 @@ Field.propTypes = {
 
 export class Form extends React.Component{
     render() {
+        let autoFocus = true;
         const items = [];
         this.props.children.forEach(({props: {id, type, title}}) => items.push({id, type, title}));
-        Object.entries(this.props.item).forEach(([id, value]) => (i => i >= 0 ? items[i].value = value : items.push({id, type: "text", title: id, value}))(items.findIndex((item) => item.id === id)));
+        Object.entries(this.props.item).forEach(([id, value]) => (i => i >= 0 ? items[i].value = value : items.push({id, type: "hidden", title: id, value}))(items.findIndex((item) => item.id === id)));
         return (
             <form style={{margin: 16}} onSubmit={e => e.preventDefault() || this.props.onSubmit({...this.props.item, ...Object.fromEntries(new FormData(e.target))})}>
                 {items.map(({id, type, title, value}) => (
                     <React.Fragment key={id}>
-                        {type === "disabled" && <TextField disabled autoComplete="off" fullWidth autoFocus name={id} label={title} defaultValue={value}/>}
+                        {type === "disabled" && <TextField disabled autoComplete="off" fullWidth name={id} label={title} defaultValue={value}/>}
                         {type === "image" && value && <img alt={title} src={value}/>}
-                        {type === "text" && <TextField autoComplete="off" fullWidth autoFocus name={id} label={title} defaultValue={value}/>}
+                        {type === "text" && <TextField autoComplete="off" fullWidth autoFocus={autoFocus} name={id} label={title} defaultValue={value}/>}
+                        {type === "text" && (autoFocus = false)}
                     </React.Fragment>
                 ))}
                 <Button type="submit" fullWidth variant="contained" color="primary" style={{margin: "16px 0"}}>OK</Button>

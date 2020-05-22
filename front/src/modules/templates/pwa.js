@@ -21,27 +21,46 @@ export class Slide extends React.Component {render() {return false}}
 export class PWA extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.routes = [];
+        this.state = {routes: []};
+        this.init = this.init.bind(this);
+    }
+
+    init() {
+        const routes = [];
 
         const pages = this.props.children;
 
-        pages.forEach((page) => page.props && (({title, icon, path}) => title ? (icon && menuItems.push({title, icon, path})) : menuItems.push(0))(page.props));
-        pages.forEach((page, i) => page.props && (({path, component: Component, title, children: Slider, render: Render}) => {
+        menuItems.length = 0;
+
+        pages.forEach((page) => page.props && !page.props.disabled && (({title, icon, path}) => title ? (icon && menuItems.push({title, icon, path})) : menuItems.push(0))(page.props));
+        pages.forEach((page, i) => page.props && !page.props.disabled && (({path, component: Component, title, children: Slider, render: Render}) => {
             if (Component || Slider || Render) {
                 let onSubmit = () => {};
                 Render && (Render = <Render/>);
                 Component && (Component = <Component {...page.props} onSubmit={func => onSubmit = func}/>);
                 Slider && (Slider = React.cloneElement(Slider, {submit: (...args) => onSubmit(...args)}));
 
-                this.routes.push(<Route key={i} path={path} title={title} exact component={() => <FlexBox>{Render}{Component}{Slider}</FlexBox>}/>)
+                routes.push(<Route key={i} path={path} title={title} exact component={() => <FlexBox>{Render}{Component}{Slider}</FlexBox>}/>)
             }
         })(page.props));
-        this.routes.push(<Route key={pages.length} status={404} render={() => <Header><GoHome/><HeaderTitle>Error 404</HeaderTitle></Header>}/>);
+        routes.push(<Route key={pages.length} status={404} render={() => <Header><GoHome/><HeaderTitle>Error 404</HeaderTitle></Header>}/>);
+
+        this.setState({routes});
 
         settings.appId = this.props.appId;
         settings.title = this.props.title;
         settings.subtitle = this.props.subtitle;
         settings.server = this.props.server;
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
+            this.init()
+        }
+    }
+
+    componentDidMount() {
+        this.init()
     }
 
     render() {
@@ -52,7 +71,7 @@ export class PWA extends React.Component {
                     <FlexScreen>
                         <FlexBox>
                             <PageSlider>
-                                {this.routes}
+                                {this.state.routes}
                             </PageSlider>
                         </FlexBox>
                         <FlexBar>

@@ -10,12 +10,12 @@ import Container from '@material-ui/core/Container';
 export default class Change extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state={oldpassword: "", email: "", password: "", type: "change"};
+        this.state = {oldpassword: "", password: "", type: "change", ok: false, error: false};
         this.answer = this.answer.bind(this);
     }
 
-    answer(data) {
-        console.log(data)
+    answer(ok) {
+        this.setState({ok, error: !ok});
     }
 
 
@@ -26,11 +26,12 @@ export default class Change extends React.Component {
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <Avatar><LockOutlinedIcon/></Avatar>
                         <Typography component="h1" variant="h5">Смена пароля</Typography>
-                        <form onSubmit={e => e.preventDefault() || this.props.submit(this.state, this.answer)}>
-                            <TextField variant="outlined" margin="normal" required fullWidth name="oldpassword" label="Старый пароль" type="password" autoComplete="current-password" onChange={e => this.setState({oldpassword: e.target.value})}/>
-                            <TextField variant="outlined" margin="normal" required fullWidth name="newpassword" label="Новый пароль" type="password" autoComplete="current-password" onChange={e => this.setState({password: e.target.value})}/>
-                            <Button type="submit" fullWidth variant="contained" color="primary" style={{margin: "16px 0"}}>Сменить</Button>
-                        </form>
+                        {this.state.ok ? "Пароль успешно изменен" :
+                            <form onSubmit={e => e.preventDefault() || this.props.submit(this.state, this.answer)}>
+                                <TextField error={this.state.error} required fullWidth label="Старый пароль" type="password" onChange={e => this.setState({oldpassword: e.target.value})}/>
+                                <TextField error={this.state.error} required fullWidth label="Новый пароль" type="password" onChange={e => this.setState({password: e.target.value})}/>
+                                <Button type="submit" fullWidth variant="contained" color="primary" style={{margin: "16px 0"}}>Сменить</Button>
+                            </form>}
                     </div>
                 </Container>
             </FlexBox>

@@ -1,7 +1,8 @@
-module.exports = (app, db) => {
-    require('./getAll')(app, db);
-    require('./change')(app, db);
-    require('./delete')(app, db);
-    require('./add')(app, db);
-    require('./generator')(app, db);
+module.exports = (app, client) => {
+    require('./getAll')(app, client);
+    require('./change')(app, client);
+    require('./delete')(app, client);
+    require('./add')(app, client);
+    require('./generator')(app, client);
+    require('./auth')(app, client);
 };

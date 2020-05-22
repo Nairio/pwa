@@ -46,33 +46,43 @@ import Forgot from "./modules/pages/account/forgot";
 import Fab from "./modules/pages/fab/fab";
 import FormPage from "./modules/pages/form/form";
 
-//storage("auth", {name: "Наири", email: "nairik@mail.ru"});
-//storage("auth", false);
-
-const {name, email} = storage("auth");
-
 class App extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {};
+        this.onAccountChange = this.onAccountChange.bind(this);
+    }
+
+    onAccountChange() {
+        const {name, email} = storage("auth") || {};
+        this.setState({name, email, ready: true});
+    }
+
+    componentDidMount() {
+        this.onAccountChange()
+    }
+
     render() {
+        const {name, email, ready} = this.state;
+        if (!ready) return false;
         return (
             <PWA appId="pwa" title="Progressive" subtitle="PWA" server="http://localhost:8000">
                 <Page title="Главная" path="/" component={Index}/>
 
-                {email ? (
-                    <Page title={`${name} (${email})`} icon={<AccountBoxIcon/>} path="/account/" component={Account}>
-                        <SwipeableTop>
-                            <Slide auth={{name, email}} title="Выйти" component={Logout}/>
-                            <Slide auth={{name, email}} title="Сменить пароль" component={Change}/>
-                        </SwipeableTop>
-                    </Page>
-                ) : (
-                    <Page title={"Вход"} icon={<ExitToAppIcon/>} path="/account/" component={Account}>
-                        <SwipeableTop>
-                            <Slide title="Войти" component={Login}/>
-                            <Slide title="Зарегистрироваться" component={Register}/>
-                            <Slide title="Восстановить пароль" component={Forgot}/>
-                        </SwipeableTop>
-                    </Page>
-                )}
+                <Page disabled={!email} title={`${name} (${email})`} icon={<AccountBoxIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
+                    <SwipeableTop>
+                        <Slide auth={{name, email}} title="Выйти" component={Logout}/>
+                        <Slide auth={{name, email}} title="Сменить пароль" component={Change}/>
+                    </SwipeableTop>
+                </Page>
+
+                <Page disabled={email} title={"Вход"} icon={<ExitToAppIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
+                    <SwipeableTop>
+                        <Slide title="Войти" component={Login}/>
+                        <Slide title="Зарегистрироваться" component={Register}/>
+                        <Slide title="Восстановить пароль" component={Forgot}/>
+                    </SwipeableTop>
+                </Page>
 
                 <Divider/>
                 <Page title="Верхний слайдер" icon={<VerticalAlignTopIcon/>} path="/top-slider/" component={Hslide}>

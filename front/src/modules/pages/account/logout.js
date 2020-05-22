@@ -9,12 +9,12 @@ import Container from '@material-ui/core/Container';
 export default class Logout extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {type: "logout"};
+        this.state = {type: "logout", ok: false, error: false};
         this.answer = this.answer.bind(this);
     }
 
-    answer(data) {
-        console.log(data)
+    answer(ok) {
+        this.setState({ok, error: !ok});
     }
 
 
