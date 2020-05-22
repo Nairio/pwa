@@ -66,7 +66,7 @@ class App extends React.Component {
         const {name, email, ready} = this.state;
         if (!ready) return false;
         return (
-            <PWA appId="pwa" title="Progressive" subtitle="PWA" server="http://localhost:8000">
+            <PWA appId="pwa" title="Progressive" subtitle="PWA" server="http://192.168.1.11:8000">
                 <Page title="Главная" path="/" component={Index}/>
 
                 <Page disabled={!email} title={`${name} (${email})`} icon={<AccountBoxIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
