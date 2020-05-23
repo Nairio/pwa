@@ -3,9 +3,9 @@ import {storage} from "./localstorage";
 import {getClientId} from "./client";
 
 
-const clientId = getClientId();
 
 export const request = (method, data) => {
+    const clientId = getClientId();
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -102,7 +102,6 @@ export const Auth = (data) => {
         const {ok, name, email} = await request("auth", {...auth, ...data, appId: "auth"});
         if (["register", "login"].includes(data.type)) storage("auth", {name, email});
         if (["logout"].includes(data.type)) storage("auth", false, getClientId(true));
-
-        resolve({ok, name, email})
+        resolve({ok, name, email});
     });
 };
