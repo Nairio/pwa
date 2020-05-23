@@ -1,7 +1,7 @@
 import React from 'react';
 import VirtualList from "../../templates/virtual-list";
 import FullScreen from "../../templates/fullscreen";
-import {FlexBox, FlexPullToRefresh, FlexScroll} from "../../templates/flex";
+import {FlexBox, FlexScroll} from "../../templates/flex";
 import Header from "../../header/header";
 import GoHome from "../../header/go-home";
 import HeaderTitle from "../../header/header-title";
@@ -22,7 +22,6 @@ export default class VirtualListPage extends React.Component {
         this.onClose = this.onClose.bind(this);
         this.onCreate = this.onCreate.bind(this);
         this.onEdit = this.onEdit.bind(this);
-        this.scrollTop = 0;
     }
 
     onClose() {
@@ -58,7 +57,7 @@ export default class VirtualListPage extends React.Component {
                     <Search onChange={term => this.DB.filter(term)}/>
                     <FabRightBottom color="secondary" onClick={this.onCreate}><AddIcon/></FabRightBottom>
                 </Header>
-                <FlexPullToRefresh canRefresh={() => this.scrollTop === 0} onRefresh={() => this.DB.load()}>
+                <FlexBox>
                     <FullScreen open={open} title={item.title} onClose={this.onClose}>
                         <FlexScroll>
                             <FlexBox middle center>
@@ -73,7 +72,7 @@ export default class VirtualListPage extends React.Component {
                         <FabRightBottom size="small" hide={isAdd} color="secondary" onClick={() => this.DB.delete(item)}><DeleteForeverIcon/></FabRightBottom>
                     </FullScreen>
                     <VirtualList
-                        onScroll={top => this.scrollTop = top}
+                        onPull={() => this.DB.load()}
                         data={data}
                         index={index}
                         divider="inset"
@@ -85,7 +84,7 @@ export default class VirtualListPage extends React.Component {
                             </ListItem>
                         )}
                     />
-                </FlexPullToRefresh>
+                </FlexBox>
             </FlexBox>
         )
     }

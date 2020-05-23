@@ -2,7 +2,7 @@ import React from 'react';
 import {CircularProgress, Divider} from "@material-ui/core";
 import {FixedSizeList} from 'react-window';
 import * as PropTypes from 'prop-types';
-import {FlexBox} from "./flex";
+import {FlexBox, FlexPullToRefresh} from "./flex";
 
 export default class VirtualList extends React.Component {
     constructor(props, context) {
@@ -46,13 +46,6 @@ export class VirtualList2 extends React.Component {
     }
     renderRow({style, index}) {
         const {data, divider} = this.props;
-        try {
-            if(this.parent.children[1]){
-                this.props.onScroll(this.parent.children[1].scrollTop)
-            }
-        }catch (e) {
-
-        }
         return (
             <div style={style}>
                 <this.props.template {...data[index]}/>
@@ -86,12 +79,14 @@ export class VirtualList2 extends React.Component {
     render() {
         if (!this.props.data) return <FlexBox center middle><CircularProgress/></FlexBox>;
         return (
-            <FlexBox elementDOM={el => this.parent = el}>
-                <this.renderRow data={[{}]} index={0} style={{display: "none", padding: 0}}/>
-                <FixedSizeList useIsScrolling ref={this.listRef} width={this.state.width} height={this.state.height} itemSize={this.state.itemSize} itemCount={this.props.data.length}>
-                    {this.renderRow}
-                </FixedSizeList>
-            </FlexBox>
+            <FlexPullToRefresh canRefresh={() => this.listRef.current._outerRef.scrollTop === 0} onRefresh={this.props.onPull}>
+                <FlexBox elementDOM={el => this.parent = el}>
+                    <this.renderRow data={[{}]} index={0} style={{display: "none", padding: 0}}/>
+                    <FixedSizeList ref={this.listRef} width={this.state.width} height={this.state.height} itemSize={this.state.itemSize} itemCount={this.props.data.length}>
+                        {this.renderRow}
+                    </FixedSizeList>
+                </FlexBox>
+            </FlexPullToRefresh>
         )
     }
 }

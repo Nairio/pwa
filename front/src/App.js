@@ -49,22 +49,17 @@ import FormPage from "./modules/pages/form/form";
 class App extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        const {name, email} = storage("auth") || {};
+        this.state = {name, email};
         this.onAccountChange = this.onAccountChange.bind(this);
     }
 
-    onAccountChange() {
-        const {name, email} = storage("auth") || {};
-        this.setState({name, email, ready: true});
-    }
-
-    componentDidMount() {
-        this.onAccountChange()
+    onAccountChange({name, email}) {
+        this.setState({name, email});
     }
 
     render() {
-        const {name, email, ready} = this.state;
-        if (!ready) return false;
+        const {name, email} = this.state;
 
         return (
             <PWA appId="pwa" title="Progressive" subtitle="PWA" server="http://192.168.1.11:8000">

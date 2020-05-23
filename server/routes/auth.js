@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 module.exports = (app, client) => {
     const db = client.db("auth");
 
-    app.post("/", async ({body: {name, email, password, type, oldpassword, clientId}}, res) => {
+    app.post("/auth/", async ({body: {name, email, password, type, oldpassword, clientId}}, res) => {
         const login = ({name}) => {
             (async () => {
                 const {result: {ok}} = await db.collection("clients").insertOne({email, clientId});

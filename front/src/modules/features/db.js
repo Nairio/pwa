@@ -9,10 +9,9 @@ export const request = (method, data) => {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    setTimeout(() => controller.abort(), 1000);
+    setTimeout(() => controller.abort(), 5000);
 
-    return fetch(
-        settings.server + "/" + method + "/",
+    return fetch(settings.server + "/" + method + "/",
         {signal, method: "POST", body: JSON.stringify({appId: settings.appId, clientId, ...data})}
     ).then(res => res.json())
 };
@@ -95,4 +94,15 @@ export const DB = (col, onData) => {
             onChange();
         }
     }
+};
+
+export const Auth = (data) => {
+    return new Promise(async (resolve) => {
+        const auth = storage("auth") || {};
+        const {ok, name, email} = await request("auth", {...auth, ...data, appId: "auth"});
+        if (["register", "login"].includes(data.type)) storage("auth", {name, email});
+        if (["logout"].includes(data.type)) storage("auth", false, getClientId(true));
+
+        resolve({ok, name, email})
+    });
 };

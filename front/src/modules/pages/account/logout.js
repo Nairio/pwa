@@ -13,8 +13,9 @@ export default class Logout extends React.Component {
         this.answer = this.answer.bind(this);
     }
 
-    answer(ok) {
+    answer(ok, callBack) {
         this.setState({ok, error: !ok});
+        callBack();
     }
 
 
