@@ -6,9 +6,14 @@ import {getClientId} from "./client";
 const clientId = getClientId();
 
 export const request = (method, data) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    setTimeout(() => controller.abort(), 1000);
+
     return fetch(
         settings.server + "/" + method + "/",
-        {method: "POST", body: JSON.stringify({appId: settings.appId, clientId, ...data})}
+        {signal, method: "POST", body: JSON.stringify({appId: settings.appId, clientId, ...data})}
     ).then(res => res.json())
 };
 
@@ -34,7 +39,7 @@ export const DB = (col, onData) => {
             const deleted = data.filter(d => d.deleted);
 
             onChange();
-            request("getAll", {col, added, modified, deleted}).then(d => data = d).then(onChange)
+            request("getAll", {col, added, modified, deleted}).then(d => {data = d; index = 0}).then(onChange)
         },
         close: () => {
             onData = () => {}

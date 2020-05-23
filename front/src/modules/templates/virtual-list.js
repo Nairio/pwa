@@ -46,6 +46,13 @@ export class VirtualList2 extends React.Component {
     }
     renderRow({style, index}) {
         const {data, divider} = this.props;
+        try {
+            if(this.parent.children[1]){
+                this.props.onScroll(this.parent.children[1].scrollTop)
+            }
+        }catch (e) {
+
+        }
         return (
             <div style={style}>
                 <this.props.template {...data[index]}/>
@@ -81,7 +88,7 @@ export class VirtualList2 extends React.Component {
         return (
             <FlexBox elementDOM={el => this.parent = el}>
                 <this.renderRow data={[{}]} index={0} style={{display: "none", padding: 0}}/>
-                <FixedSizeList ref={this.listRef} width={this.state.width} height={this.state.height} itemSize={this.state.itemSize} itemCount={this.props.data.length}>
+                <FixedSizeList useIsScrolling ref={this.listRef} width={this.state.width} height={this.state.height} itemSize={this.state.itemSize} itemCount={this.props.data.length}>
                     {this.renderRow}
                 </FixedSizeList>
             </FlexBox>

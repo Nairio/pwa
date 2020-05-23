@@ -20,11 +20,10 @@ export default class Account extends React.Component {
                 if (["logout"].includes(data.type)) storage("auth", false, getClientId(true));
 
                 answer(ok);
-                this.props.onChange(ok);
+                ok && this.props.onChange(ok);
                 console.log({ok});
             } catch (e) {
                 answer({ok: 0});
-                this.props.onChange(0);
                 console.log({ok: 0});
             }
         });

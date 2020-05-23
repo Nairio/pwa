@@ -65,6 +65,7 @@ class App extends React.Component {
     render() {
         const {name, email, ready} = this.state;
         if (!ready) return false;
+
         return (
             <PWA appId="pwa" title="Progressive" subtitle="PWA" server="http://192.168.1.11:8000">
                 <Page title="Главная" path="/" component={Index}/>
@@ -85,6 +86,7 @@ class App extends React.Component {
                 </Page>
 
                 <Divider/>
+
                 <Page title="Верхний слайдер" icon={<VerticalAlignTopIcon/>} path="/top-slider/" component={Hslide}>
                     <SwipeableTop>
                         <Slide title="Первый" icon={<PermIdentityIcon/>} component={Slide1}/>
@@ -92,6 +94,7 @@ class App extends React.Component {
                         <Slide title="Третий" icon={<SystemUpdateIcon/>} component={Slide3}/>
                     </SwipeableTop>
                 </Page>
+
                 <Page title="Нижний слайдер" icon={<VerticalAlignTopIcon/>} path="/bottom-slider/" component={Hslide}>
                     <SwipeableBottom>
                         <Slide title="Первый" icon={<PermIdentityIcon/>} component={Slide1}/>
@@ -99,7 +102,9 @@ class App extends React.Component {
                         <Slide title="Третий" icon={<SystemUpdateIcon/>} component={Slide3}/>
                     </SwipeableBottom>
                 </Page>
+
                 <Divider/>
+
                 <Page title="Форма" icon={<ListAltIcon/>} path="/form/" component={FormPage}/>
                 <Page title="Поиск" icon={<SearchIcon/>} path="/search/" component={SearchPage}/>
                 <Page title="Настройки" icon={<MoreVertIcon/>} path="/settings/" component={SettingsPage}/>
