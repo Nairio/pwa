@@ -2,8 +2,6 @@ import {settings} from "./settings";
 import {storage} from "./localstorage";
 import {getClientId} from "./client";
 
-
-
 export const request = (method, data) => {
     const clientId = getClientId();
     const controller = new AbortController();
@@ -15,7 +13,6 @@ export const request = (method, data) => {
         {signal, method: "POST", body: JSON.stringify({appId: settings.appId, clientId, ...data})}
     ).then(res => res.json())
 };
-
 
 export const DB = (col, onData) => {
     let data = [];
