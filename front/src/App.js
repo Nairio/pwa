@@ -17,6 +17,7 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import ToysIcon from '@material-ui/icons/Toys';
 
 import VerticalAlignTopIcon from '@material-ui/icons/VerticalAlignTop';
+import VerticalAlignBottomIcon from '@material-ui/icons/VerticalAlignBottom';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -90,7 +91,7 @@ class App extends React.Component {
                     </SwipeableTop>
                 </Page>
 
-                <Page title="Нижний слайдер" icon={<VerticalAlignTopIcon/>} path="/bottom-slider/" component={Hslide}>
+                <Page title="Нижний слайдер" icon={<VerticalAlignBottomIcon/>} path="/bottom-slider/" component={Hslide}>
                     <SwipeableBottom>
                         <Slide title="Первый" icon={<PermIdentityIcon/>} component={Slide1}/>
                         <Slide title="Второй" icon={<CloudDownloadIcon/>} component={Slide2}/>
