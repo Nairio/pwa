@@ -10,7 +10,7 @@ export default class Index extends React.Component {
             <FlexBox>
                 <Header>
                     <Menu/>
-                    <HeaderTitle>{this.props.title}4</HeaderTitle>
+                    <HeaderTitle>{this.props.title}</HeaderTitle>
                 </Header>
                 <FlexScroll>
                     <FlexBox center middle>
