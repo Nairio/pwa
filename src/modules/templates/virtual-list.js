@@ -41,7 +41,7 @@ export default class VirtualList extends React.Component {
             }
 
             if (this.itemCount === data.length) {
-                this.setItem[index](data[index]);
+                this.setItem[index] && this.setItem[index](data[index]);
             }
 
             this.itemCount = data.length;
