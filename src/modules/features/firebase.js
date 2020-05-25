@@ -15,95 +15,12 @@ const firebaseConfig = {
     appId: "1:382627736494:web:aa0e9ba556a7096b73b63f",
     measurementId: "G-T68PVDK68Y"
 };
-
-
-export const DB = (col, onData) => {
-    let data = [];
-    let index = 0;
-    let term = "";
-
-    const onChange = () => {
-        storage("data", data);
-        onData({data: filter(data), index});
-    };
-
-    const filter = () => term ? data.filter(({title, text}) => (title + " " + text).toLowerCase().includes(term.toLowerCase())) : data;
-
-    return {
-        load: () => {
-            data = storage("data") || [];
-
-            const added = data.filter(d => d.added && !d.deleted);
-            const modified = data.filter(d => d.modified && !d.deleted && !d.added);
-            const deleted = data.filter(d => d.deleted);
-
-            onChange();
-            request("getAll", {col, added, modified, deleted}).then(d => {
-                data = d;
-                index = 0
-            }).then(onChange)
-        },
-        close: () => {
-            onData = () => {
-            }
-        },
-        add: (item) => {
-            item = {...item, added: true};
-            index = data.length;
-            data = data.concat(item);
-            onChange();
-
-            request("add", {col, item: {...item, added: undefined}}).then(({ok, _id}) => {
-                if (ok === 1) {
-                    delete item.added;
-                    index = data.findIndex(({_id}) => _id === item._id);
-                    data = data.map((d) => d._id === item._id ? {...item, _id} : d);
-                    onChange();
-                }
-            });
-        },
-        change: (item) => {
-            item = {...item, modified: true};
-            index = data.findIndex(({_id}) => _id === item._id);
-            data = data.map((d) => d._id === item._id ? item : d);
-            onChange();
-
-            request("change", {col, item: {...item, modified: undefined}}).then(({ok}) => {
-                if (ok === 1) {
-                    delete item.modified;
-                    index = data.findIndex(({_id}) => _id === item._id);
-                    data = data.map((d) => d._id === item._id ? item : d);
-                    onChange();
-                }
-            });
-        },
-        delete: (item) => {
-            if (!window.confirm(`Удалить "${item.title}"?`)) return;
-            item = {...item, deleted: true};
-            index = data.findIndex(({_id}) => _id === item._id);
-            data = data.map((d) => d._id === item._id ? item : d);
-            onChange();
-
-            request("delete", {col, item: {...item, deleted: undefined}}).then(({ok}) => {
-                if (ok === 1) {
-                    delete item.deleted;
-                    index = data.findIndex(({_id}) => _id === item._id);
-                    data = data.filter(({_id}) => _id !== item._id);
-                    onChange();
-                }
-            });
-        },
-        filter: (t) => {
-            term = t;
-            onChange();
-        }
-    }
-};
-
 const app = firebase.initializeApp(firebaseConfig);
 const auth = app.auth();
 auth.onAuthStateChanged((user) => storage("auth", user ? {email: user.email, name: user.displayName} : false));
 
+firebase.firestore().settings({cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED});
+firebase.firestore().enablePersistence();
 export const Auth = async ({email, oldpassword, password, type, name}) => {
     try {
         if (type === "register") {
@@ -116,8 +33,8 @@ export const Auth = async ({email, oldpassword, password, type, name}) => {
         }
         if (type === "logout") {
             await auth.signOut();
-            storage("auth",  false);
-            storage("data",  false);
+            storage("auth", false);
+            storage("data", false);
         }
         if (type === "forgot") {
             await auth.sendPasswordResetEmail(email);
@@ -132,59 +49,45 @@ export const Auth = async ({email, oldpassword, password, type, name}) => {
     }
 };
 
+const user = {get: (cb) => user.u ? cb(user.u) : auth.onAuthStateChanged(u => u && cb(user.u = u))};
 
-export const request = (method, {col, item, added, modified, deleted}) => {
-    return new Promise((resolve) => {
-        auth.onAuthStateChanged(async (user) => {
-            if (!user) return;
-            try {
-                item = (d => {for (const i in d) d[i] === undefined && (delete d[i]); return d})(item);
+export const DB = (col, onData) => {
+    let index = 0;
+    let sort = 0;
+    let data = [];
+    let term = "";
+    const filter = () => term ? data.filter(({title, text}) => (title + " " + text).toLowerCase().includes(term.toLowerCase())) : data;
+    const getFirestoreDB = (cb) => user.get((user) => cb(firebase.firestore().collection(settings.appId).doc(col).collection(user.email)));
 
-                const db = firebase.firestore().collection(settings.appId).doc(col).collection(user.email);
+    getFirestoreDB((db) => db.orderBy("sort", "asc").onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach(({type, doc}) => {
+            const item = {...doc.data(), _id: doc.id};
 
-                if (method === "add") {
-                    delete item._id;
-                    const doc = await db.add(item);
-                    resolve({ok: 1, _id: doc.id});
-                }
+            sort = Math.max(sort, item.sort);
 
-                if (method === "change") {
-                    await db.doc(item._id).set(item);
-                    resolve({ok: 1});
-                }
-
-                if (method === "delete") {
-                    await db.doc(item._id).delete();
-                    resolve({ok: 1});
-                }
-
-                if (method === "getAll") {
-
-                    for (const i in added) {
-                        const item = added[i];
-                        delete item._id;
-                        delete item.added;
-                        delete item.modified;
-                        await db.add(item)
-                    }
-
-                    for (const i in modified) {
-                        const item = modified[i];
-                        delete item.modified;
-                        await db.doc(item._id).set(item)
-                    }
-
-                    for (const i in deleted) {
-                        const item = deleted[i];
-                        await db.doc(item._id).delete()
-                    }
-
-                    resolve((await db.get()).docs.reduce((s, doc) => s.concat({...doc.data(), _id: doc.id}), []));
-                }
-            } catch (e) {
-                resolve({ok: 0});
+            if (type === "added") {
+                index = data.push(item) - 1;
+            }
+            if (type === "modified") {
+                index = data.findIndex(({_id}) => _id === doc.id);
+                data[index] = item;
+            }
+            if (type === "removed") {
+                index = data.findIndex(({_id}) => _id === doc.id);
+                data.splice(index, 1);
             }
         });
-    })
+        onData({data: filter(data), index});
+    }));
 
+    return {
+        close: () => {onData = () => {}},
+        load: () => getFirestoreDB((db) => db.get()),
+        add: (item) => getFirestoreDB((db) => db.add({...item, sort: sort + 1})),
+        change: ({_id, ...item}) => getFirestoreDB((db) => db.doc(_id).set(item)),
+        delete: ({_id, title}) => window.confirm(`Удалить "${title}"?`) && getFirestoreDB((db) => db.doc(_id).delete()),
+        filter: (t) => onData({data: filter(data), index: 0}, term = t)
+    }
 };
+
+

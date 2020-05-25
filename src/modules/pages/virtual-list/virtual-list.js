@@ -29,8 +29,7 @@ export default class VirtualListPage extends React.Component {
     }
 
     onCreate() {
-        const item = {_id: Math.random().toString(16).slice(2)};
-        this.setState({open: true, isAdd: true, item})
+        this.setState({open: true, isAdd: true, item: {}})
     }
 
     onEdit(item) {
@@ -38,7 +37,7 @@ export default class VirtualListPage extends React.Component {
     }
 
     componentDidMount() {
-        this.DB = DB("data", ({data, index}) => this.setState({open: false, data, index}));
+        this.DB = DB("data", ({data, index}) => this.setState({open: false, data, index, modified: new Date()}));
         this.DB.load();
     }
 
@@ -47,8 +46,7 @@ export default class VirtualListPage extends React.Component {
     }
 
     render() {
-        const {data, index, open, isAdd, item} = this.state;
-
+        const {data, modified, index, open, isAdd, item} = this.state;
         return (
             <FlexBox>
                 <Header>
@@ -64,6 +62,7 @@ export default class VirtualListPage extends React.Component {
                                 <Form item={item} onSubmit={item => isAdd ? this.DB.add(item) : this.DB.change(item)}>
                                     <Field id="img" type="image" title="Иконка"/>
                                     <Field id="_id" type="disabled" title="Идентификатор"/>
+                                    <Field id="sort" type="disabled" title="Сортировка"/>
                                     <Field id="title" type="text" title="Название"/>
                                     <Field id="text" type="text" title="Текст"/>
                                 </Form>
@@ -75,9 +74,10 @@ export default class VirtualListPage extends React.Component {
                         onPull={() => this.DB.load()}
                         data={data}
                         index={index}
+                        modified={modified}
                         divider="inset"
                         template={(item) => (
-                            <ListItem button alignItems="flex-start" style={{background: (item.deleted && "red") || (item.modified && "yellow") || (item.added && "green") || "white"}}>
+                            <ListItem button alignItems="flex-start">
                                 {item.img && <ListItemAvatar><Avatar src={item.img}/></ListItemAvatar>}
                                 <ListItemText inset={!item.img} primary={`${item.title} ${item.text}`} secondary={item._id}/>
                                 <IconButton onClick={() => this.onEdit(item)}><EditIcon/></IconButton>

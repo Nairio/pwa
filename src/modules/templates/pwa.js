@@ -50,7 +50,6 @@ export class PWA extends React.Component {
         settings.appId = this.props.appId;
         settings.title = this.props.title;
         settings.subtitle = this.props.subtitle;
-        settings.server = this.props.server;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
