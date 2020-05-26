@@ -5,7 +5,7 @@ vh();
 const s = document.head.appendChild(document.createElement("style"));
 s.setAttribute("class", "Flex");
 s.innerText = `
-    .Flex {display: flex; width: 100%}
+    .Flex {display: flex; width: 100%; overflow: hidden}
     .Flex.Box {flex-direction: column; flex-grow: 1}
     .Flex.Screen {position: fixed; touch-action: none; overflow: hidden; height: 100vh; height: calc(var(--vh, 1vh) * 100)}
     .Flex.Bottom {justify-content: flex-end}
