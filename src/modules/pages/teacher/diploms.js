@@ -7,7 +7,7 @@ import {Avatar, ListItem, ListItemAvatar, List} from "@material-ui/core";
 
 import DBVirtualList from "../../templates/db-virtual-list";
 import FabRightBottom from "../../templates/fab-right-bottom";
-import DeleteForeverIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 export default class Diploms extends React.Component {
     render() {
