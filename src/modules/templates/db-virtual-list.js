@@ -4,7 +4,6 @@ import FullScreen from "../templates/fullscreen";
 import {FlexBox, FlexScroll} from "../templates/flex";
 import {Field, Form} from "../templates/form";
 import {DB} from "../features/firebase";
-import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
@@ -48,8 +47,7 @@ export default class DBVirtualList extends React.Component {
             <FlexBox style={{overflow: "hidden"}}>
                 {(term || data.length > 1) && (
                     <Grid container spacing={1} alignItems="flex-end" >
-                        <Grid item><SearchIcon/></Grid>
-                        <Grid item xs style={{paddingRight: 16}}>
+                        <Grid item xs style={{paddingRight: 16, paddingLeft: 16}}>
                             <TextField onChange={e => (term => {this.DB.filter(term); this.setState({term})})(e.target.value)} fullWidth placeholder="Поиск..."/>
                         </Grid>
                     </Grid>

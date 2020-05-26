@@ -27,7 +27,7 @@ import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import Contact from "./modules/pages/teacher/contact";
+import Contacts from "./modules/pages/teacher/contacts";
 import Diploms from "./modules/pages/teacher/diploms";
 import Experience from "./modules/pages/teacher/experience";
 import Achievements from "./modules/pages/teacher/achievements";
@@ -69,7 +69,7 @@ class App extends React.Component {
                 <Divider/>
                 <Page disabled={!email} title="Личные данные" icon={<AccountBoxIcon/>} path="/personal/" component={Hslide}>
                     <SwipeableBottom>
-                        <Page title="Контакты" icon={<AccountBoxIcon/>} component={Contact}/>
+                        <Page title="Контакты" icon={<AccountBoxIcon/>} component={Contacts}/>
                         <Page title="Дипломы" icon={<VerifiedUserIcon/>} component={Diploms}/>
                         <Page title="Опыт" icon={<BusinessCenterIcon/>} component={Experience}/>
                         <Page title="Достижения" icon={<PublicIcon/>} component={Achievements}/>

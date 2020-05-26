@@ -6,12 +6,12 @@ import DBVirtualList from "../../templates/db-virtual-list";
 import FabRightBottom from "../../templates/fab-right-bottom";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
-export default class Experience extends React.Component {
-    render() {
+export default class Contacts extends React.Component {
+     render() {
         return (
             <DBVirtualList
-                single={false}
-                DBPath="teacher.experience"
+                single={true}
+                DBPath="teacher.contacts"
                 fields={[
                     {id: "photo", title: "Фотография", type: "text"},
                     {id: "firstname", title: "Имя", type: "text"},
