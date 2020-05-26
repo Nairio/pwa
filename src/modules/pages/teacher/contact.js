@@ -4,12 +4,10 @@ import FullScreen from "../../templates/fullscreen";
 import {FlexBox, FlexScroll} from "../../templates/flex";
 import Header from "../../header/header";
 import HeaderTitle from "../../header/header-title";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddIcon from '@material-ui/icons/Add';
-import {Avatar, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
+import {Avatar, ListItem, ListItemAvatar, List} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-import EditIcon from '@material-ui/icons/Edit';
-import FabRightBottom from "../../templates/fab-right-bottom";
+
 import {Field, Form} from "../../templates/form";
 import Search from "../../header/search";
 import {DB} from "../../features/firebase";
@@ -51,23 +49,23 @@ export default class Contact extends React.Component {
                 <Header>
                     <HeaderTitle align="left">{this.props.title}</HeaderTitle>
                     <Search onChange={term => this.DB.filter(term)}/>
-                    <IconButton color="secondary" onClick={this.onCreate}><AddIcon/></IconButton>
                 </Header>
                 <FlexBox>
                     <FullScreen open={open} title={item.title} onClose={this.onClose}>
                         <FlexScroll>
                             <FlexBox middle center>
                                 <Form item={item} onSubmit={item => isAdd ? this.DB.add(item) : this.DB.change(item)}>
-                                    <Field id="img" type="image" title="Иконка"/>
-                                    <Field id="_id" type="disabled" title="Идентификатор"/>
-                                    <Field id="sort" type="disabled" title="Сортировка"/>
-                                    <Field id="title" type="text" title="Название"/>
-                                    <Field id="text" type="text" title="Текст"/>
+                                    <Field id="photo" type="text" title="Фотография"/>
+                                    <Field id="firstname" type="text" title="Имя"/>
+                                    <Field id="lastname" type="text" title="Фамилия"/>
+                                    <Field id="patronymic" type="text" title="Отчество"/>
                                 </Form>
                             </FlexBox>
                         </FlexScroll>
-                        <FabRightBottom size="small" hide={isAdd} color="secondary" onClick={() => this.DB.delete(item)}><DeleteForeverIcon/></FabRightBottom>
                     </FullScreen>
+
+                    {data && data.length < 1 && <FlexBox middle center><IconButton color="secondary" onClick={this.onCreate}><AddIcon/></IconButton></FlexBox>}
+
                     <VirtualList
                         onPull={() => this.DB.load()}
                         data={data}
@@ -75,10 +73,13 @@ export default class Contact extends React.Component {
                         modified={modified}
                         divider="inset"
                         template={(item) => (
-                            <ListItem button alignItems="flex-start">
-                                {item.img && <ListItemAvatar><Avatar src={item.img}/></ListItemAvatar>}
-                                <ListItemText inset={!item.img} primary={`${item.title} ${item.text}`} secondary={item._id}/>
-                                <IconButton onClick={() => this.onEdit(item)}><EditIcon/></IconButton>
+                            <ListItem button alignItems="flex-start" onClick={() => this.onEdit(item)}>
+                                {item.photo && <ListItemAvatar><Avatar src={item.photo}/></ListItemAvatar>}
+                                <List>
+                                    <ListItem>Имя: {item.firstname}</ListItem>
+                                    <ListItem>Фамилия: {item.lastname}</ListItem>
+                                    <ListItem>Отчество: {item.patronymic}</ListItem>
+                                </List>
                             </ListItem>
                         )}
                     />
