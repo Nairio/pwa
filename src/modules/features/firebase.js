@@ -55,8 +55,8 @@ export const DB = (col, onData) => {
     let index = 0;
     let sort = 0;
     let data = [];
-    let term = "";
-    const filter = () => term ? data.filter(({title, text}) => (title + " " + text).toLowerCase().includes(term.toLowerCase())) : data;
+
+    const filter = {t: "", set: (t, cb) => cb(filter.t = t.toLowerCase()), do: d => filter.t ? d.filter(i => JSON.stringify(i).toLowerCase().includes(filter.t)) : d};
     const getFirestoreDB = (cb) => user.get((user) => cb(firebase.firestore().collection(settings.appId).doc(user.email).collection(col)));
 
     getFirestoreDB((db) => db.orderBy("sort", "asc").onSnapshot((snapshot) => {
@@ -77,7 +77,7 @@ export const DB = (col, onData) => {
                 data.splice(index, 1);
             }
         });
-        onData({data: filter(data), index});
+        onData({data: filter.do(data), index});
     }));
 
     return {
@@ -86,7 +86,7 @@ export const DB = (col, onData) => {
         add: (item) => getFirestoreDB((db) => db.add({...item, sort: sort + 1})),
         change: ({_id, ...item}) => getFirestoreDB((db) => db.doc(_id).set(item)),
         delete: ({_id, title}) => window.confirm(`Удалить "${title}"?`) && getFirestoreDB((db) => db.doc(_id).delete()),
-        filter: (t) => onData({data: filter(data), index: 0}, term = t)
+        filter: (term) => filter.set(term, () => onData({data: filter.do(data), index: 0}))
     }
 };
 
