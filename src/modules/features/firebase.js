@@ -57,7 +57,7 @@ export const DB = (col, onData) => {
     let data = [];
     let term = "";
     const filter = () => term ? data.filter(({title, text}) => (title + " " + text).toLowerCase().includes(term.toLowerCase())) : data;
-    const getFirestoreDB = (cb) => user.get((user) => cb(firebase.firestore().collection(settings.appId).doc(col).collection(user.email)));
+    const getFirestoreDB = (cb) => user.get((user) => cb(firebase.firestore().collection(settings.appId).doc(user.email).collection(col)));
 
     getFirestoreDB((db) => db.orderBy("sort", "asc").onSnapshot((snapshot) => {
         snapshot.docChanges().forEach(({type, doc}) => {
