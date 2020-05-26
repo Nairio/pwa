@@ -45,7 +45,7 @@ export default class DBVirtualList extends React.Component {
         const {data, modified, index, open, isAdd, item, term} = this.state;
         const {single, fields, template, createButton, deleteButton} = this.props;
         return (
-            <FlexBox>
+            <FlexBox style={{overflow: "hidden"}}>
                 {(term || data.length > 1) && (
                     <Grid container spacing={1} alignItems="flex-end" >
                         <Grid item><SearchIcon/></Grid>
