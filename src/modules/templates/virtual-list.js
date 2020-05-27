@@ -36,12 +36,16 @@ export default class VirtualList extends React.Component {
 
         if (prevProps.modified !== modified) {
 
+            if (this.itemCount > data.length) {
+                this.setItem[index] = () => {}
+            }
+
             if (this.itemCount < data.length) {
                 this.listRef.current.scrollToItem(index, "start");
             }
 
             if (this.itemCount === data.length) {
-                this.setItem[index] && this.setItem[index](data[index]);
+                this.setItem[index](data[index]);
             }
 
             this.itemCount = data.length;
