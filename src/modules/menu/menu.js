@@ -4,7 +4,7 @@ import Divider from "@material-ui/core/Divider";
 import {Avatar, Box, Typography} from "@material-ui/core";
 import SwipeableLeftMenu from "./swipeable-left-menu";
 import {settings} from "../features/settings";
-import flag from "../../england.png"
+import icon from "../../icon.jpg"
 
 export const menuItems = [];
 
@@ -13,7 +13,7 @@ export default class Menu extends React.Component {
         return (
             <SwipeableLeftMenu width={250}>
                 <Box m={2}>
-                    <Avatar src={flag} style={{width: 100, height: 100}}/>
+                    <Avatar src={icon} style={{width: 100, height: 100}}/>
                     <Typography variant="body1" color="textPrimary" noWrap>{settings.title}</Typography>
                     <Typography variant="body2" color="textSecondary" noWrap>{settings.subtitle}</Typography>
                 </Box>
