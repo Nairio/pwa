@@ -80,7 +80,7 @@ export default class DBVirtualList extends React.Component {
                             </Form>
                         </FlexBox>
                     </FlexScroll>
-                    {!isAdd && !single && <FabRightBottom size="small" color="secondary" onClick={() => this.DB.delete(item)}><DeleteForeverIcon/></FabRightBottom>}
+                    {!isAdd && !single && <FabRightBottom size="small" color="secondary" onClick={() => this.onClose(this.DB.delete(item))}><DeleteForeverIcon/></FabRightBottom>}
                 </FullScreen>
 
                 <VirtualList
