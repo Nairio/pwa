@@ -11,7 +11,7 @@ export default class VirtualList extends React.Component {
         this.state = {height: 0, width: 0, itemSize: 0};
         this.resize = this.resize.bind(this);
         this.renderRow = this.renderRow.bind(this);
-        window.addEventListener("resize", this.resize);
+        window.addEventListener("resize", () => this.resize());
         this.listRef = React.createRef();
         this.setItem = {};
         this.itemCount = 0;
@@ -59,6 +59,9 @@ export default class VirtualList extends React.Component {
     }
     componentDidMount() {
         this.resize();
+    }
+    componentWillUnmount() {
+        this.resize = () => {}
     }
     resize() {
         if (!this.parent || this.props.data.length < 1) return;
