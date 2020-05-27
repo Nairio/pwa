@@ -11,6 +11,7 @@ import Fab from "@material-ui/core/Fab";
 import FabRightBottom from "./fab-right-bottom";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Button from "@material-ui/core/Button";
+import {CircularProgress} from "@material-ui/core";
 
 
 export default class DBVirtualList extends React.Component {
@@ -54,6 +55,8 @@ export default class DBVirtualList extends React.Component {
     render() {
         const {data, modified, index, open, isAdd, item, term} = this.state;
         const {single, fields, template} = this.props;
+
+        if (!data) return <FlexBox center middle><CircularProgress/></FlexBox>;
 
         if(!term && !open && data.length < 1) return (
             <FlexBox middle center>
