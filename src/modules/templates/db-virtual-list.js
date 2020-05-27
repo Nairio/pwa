@@ -6,6 +6,10 @@ import {Field, Form} from "../templates/form";
 import {DB} from "../features/firebase";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import AddIcon from '@material-ui/icons/Add';
+import Fab from "@material-ui/core/Fab";
+import FabRightBottom from "./fab-right-bottom";
+import DeleteForeverIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 
 export default class DBVirtualList extends React.Component {
@@ -15,12 +19,18 @@ export default class DBVirtualList extends React.Component {
         this.onClose = this.onClose.bind(this);
         this.onCreate = this.onCreate.bind(this);
         this.onEdit = this.onEdit.bind(this);
+        this.onFilter = this.onFilter.bind(this);
 
         this.DBPath = this.props.DBPath;
     }
 
     onClose() {
         this.setState({open: false})
+    }
+
+    onFilter({target: {value: term}}) {
+        this.DB.filter(term);
+        this.setState({term})
     }
 
     onCreate() {
@@ -42,16 +52,18 @@ export default class DBVirtualList extends React.Component {
 
     render() {
         const {data, modified, index, open, isAdd, item, term} = this.state;
-        const {single, fields, template, createButton, deleteButton} = this.props;
+        const {single, fields, template} = this.props;
         return (
             <FlexBox style={{overflow: "hidden"}}>
-                {(term || data.length > 1) && (
-                    <Grid container spacing={1} alignItems="flex-end" >
-                        <Grid item xs style={{paddingRight: 16, paddingLeft: 16}}>
-                            <TextField onChange={e => (term => {this.DB.filter(term); this.setState({term})})(e.target.value)} fullWidth placeholder="Поиск..."/>
-                        </Grid>
+                <Grid spacing={2} container style={{padding: 8}}>
+                    <Grid item xs>
+                        {(term || (!single && data.length > 0)) && <TextField onChange={this.onFilter} fullWidth placeholder="Поиск..."/>}
                     </Grid>
-                )}
+                    <Grid item>
+                        {(!single || data.length < 1) && <Fab size="small" color="secondary" onClick={this.onCreate}><AddIcon/></Fab>}
+                    </Grid>
+                </Grid>
+
                 <FullScreen open={open} title={item.title} onClose={this.onClose}>
                     <FlexScroll>
                         <FlexBox middle center>
@@ -60,7 +72,7 @@ export default class DBVirtualList extends React.Component {
                             </Form>
                         </FlexBox>
                     </FlexScroll>
-                    {!isAdd && !single && deleteButton(() => this.DB.delete(item))}
+                    {!isAdd && !single && <FabRightBottom size="small" color="secondary" onClick={() => this.DB.delete(item)}><DeleteForeverIcon/></FabRightBottom>}
                 </FullScreen>
                 <VirtualList
                     onPull={() => this.DB.load()}
@@ -70,7 +82,6 @@ export default class DBVirtualList extends React.Component {
                     divider="inset"
                     template={(item) => template(item, () => this.onEdit(item))}
                 />
-                {(!single || data.length < 1) && createButton(this.onCreate)}
             </FlexBox>
         )
     }

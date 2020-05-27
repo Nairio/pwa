@@ -1,10 +1,8 @@
 import React from 'react';
-import AddIcon from '@material-ui/icons/Add';
 import {Avatar, ListItem, ListItemAvatar, List} from "@material-ui/core";
 
 import DBVirtualList from "../../templates/db-virtual-list";
-import FabRightBottom from "../../templates/fab-right-bottom";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+
 
 export default class Achievements extends React.Component {
     render() {
@@ -18,12 +16,6 @@ export default class Achievements extends React.Component {
                     {id: "lastname", title: "Фамилия", type: "text"},
                     {id: "patronymic", title: "Отчество", type: "text"},
                 ]}
-                createButton={(onCreate) => (
-                    <FabRightBottom size="small" color="secondary" onClick={onCreate}><AddIcon/></FabRightBottom>
-                )}
-                deleteButton={(onDelete) => (
-                    <FabRightBottom size="small" color="secondary" onClick={onDelete}><DeleteForeverIcon/></FabRightBottom>
-                )}
                 template={(item, onEdit) => (
                     <ListItem button alignItems="flex-start" onClick={onEdit}>
                         {item.photo && <ListItemAvatar><Avatar src={item.photo}/></ListItemAvatar>}
