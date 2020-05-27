@@ -2,6 +2,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button";
 import * as PropTypes from "prop-types";
+import {LoadableImage} from "./loadable-image";
 
 export const Field = () => false;
 
@@ -23,7 +24,7 @@ export class Form extends React.Component{
                 {items.map(({id, type, title, value}) => (
                     <React.Fragment key={id}>
                         {type === "disabled" && <TextField disabled autoComplete="off" fullWidth name={id} label={title} defaultValue={value}/>}
-                        {type === "image" && value && <img alt={title} src={value}/>}
+                        {type === "image" && <LoadableImage src={value} name={id} title={title}/>}
                         {type === "text" && <TextField autoComplete="off" fullWidth autoFocus={autoFocus} name={id} label={title} defaultValue={value}/>}
                         {type === "text" && (autoFocus = false)}
                     </React.Fragment>

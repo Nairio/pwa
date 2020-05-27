@@ -46,6 +46,8 @@ import Register from "./modules/pages/account/register";
 import Forgot from "./modules/pages/account/forgot";
 import Fab from "./modules/pages/fab/fab";
 import FormPage from "./modules/pages/form/form";
+import ImageIcon from '@material-ui/icons/Image';
+import LoadableImagePage from "./modules/pages/loadable-image/loadable-image";
 
 class App extends React.Component {
     constructor(props, context) {
@@ -101,6 +103,7 @@ class App extends React.Component {
 
                 <Divider/>
 
+                <Page title="Изображение" icon={<ImageIcon/>} path="/image/" component={LoadableImagePage}/>
                 <Page title="Форма" icon={<ListAltIcon/>} path="/form/" component={FormPage}/>
                 <Page title="Поиск" icon={<SearchIcon/>} path="/search/" component={SearchPage}/>
                 <Page title="Настройки" icon={<MoreVertIcon/>} path="/settings/" component={SettingsPage}/>

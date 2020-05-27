@@ -43,7 +43,7 @@ export default class DBVirtualList extends React.Component {
     }
 
     componentDidMount() {
-        this.DB = DB(this.DBPath, ({data, index}) => this.setState({open: false, data, index, modified: new Date()}));
+        this.DB = DB(this.DBPath, ({data, index}) => this.setState({data, index, modified: new Date()}));
         this.DB.load();
     }
 
@@ -75,7 +75,7 @@ export default class DBVirtualList extends React.Component {
                 <FullScreen open={open} title={item.title} onClose={this.onClose}>
                     <FlexScroll>
                         <FlexBox middle center>
-                            <Form item={item} onSubmit={item => isAdd ? this.DB.add(item) : this.DB.change(item)}>
+                            <Form item={item} onSubmit={item => this.onClose(isAdd ? this.DB.add(item) : this.DB.change(item))}>
                                 {fields.map(({id, type, title}) => <Field key={id} id={id} type={type} title={title}/>)}
                             </Form>
                         </FlexBox>

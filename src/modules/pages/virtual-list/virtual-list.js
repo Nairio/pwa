@@ -26,9 +26,9 @@ export default class VirtualListPage extends React.Component {
                         single={false}
                         DBPath="data"
                         fields={[
-                            {id: "img", title: "Иконка", type: "image"},
                             {id: "_id", title: "Идентификатор", type: "disabled"},
                             {id: "sort", title: "Сортировка", type: "disabled"},
+                            {id: "img", title: "Иконка", type: "image"},
                             {id: "title", title: "Название", type: "text"},
                             {id: "text", title: "Текст", type: "text"},
                         ]}
