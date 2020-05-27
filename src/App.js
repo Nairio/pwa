@@ -2,20 +2,17 @@ import React from 'react';
 import './App.css';
 import Index from "./modules/pages/index";
 
-import VirtualListPage from "./modules/pages/virtual-list/virtual-list";
 import Divider from "@material-ui/core/Divider";
 import {SwipeableBottom, SwipeableTop} from "./modules/templates/swipeable";
 import {storage} from "./modules/features/localstorage";
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Account from "./modules/pages/account/account";
 import {Page, PWA, Slide} from "./modules/templates/pwa";
-import Hslide from "./modules/pages/slides/hslide";
 import Change from "./modules/pages/account/change";
 import Logout from "./modules/pages/account/logout";
 import Login from "./modules/pages/account/login";
 import Register from "./modules/pages/account/register";
 import Forgot from "./modules/pages/account/forgot";
-import FormPage from "./modules/pages/form/form";
 import ChatIcon from '@material-ui/icons/Chat';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import DateRangeIcon from '@material-ui/icons/DateRange';
@@ -31,6 +28,12 @@ import Contacts from "./modules/pages/teacher/contacts";
 import Diploms from "./modules/pages/teacher/diploms";
 import Experience from "./modules/pages/teacher/experience";
 import Achievements from "./modules/pages/teacher/achievements";
+import Courses from "./modules/pages/courses/courses";
+import Groups from "./modules/pages/groups/groups";
+import Students from "./modules/pages/students/students";
+import Calendar from "./modules/pages/calendar/calendar";
+import Chat from "./modules/pages/chat/chat";
+import Reports from "./modules/pages/reports/reports";
 
 class App extends React.Component {
     constructor(props, context) {
@@ -77,15 +80,15 @@ class App extends React.Component {
                 </Page>
                 <Divider/>
 
-                <Page disabled={!email} title="Курсы" icon={<DvrIcon/>} path="/courses/" component={VirtualListPage}/>
-                <Page disabled={!email} title="Группы" icon={<GroupIcon/>} path="/courses/" component={VirtualListPage}/>
-                <Page disabled={!email} title="Студенты" icon={<AccessibilityNewIcon/>} path="/students/" component={VirtualListPage}/>
+                <Page disabled={!email} title="Курсы" icon={<DvrIcon/>} path="/courses/" component={Courses}/>
+                <Page disabled={!email} title="Группы" icon={<GroupIcon/>} path="/groups/" component={Groups}/>
+                <Page disabled={!email} title="Студенты" icon={<AccessibilityNewIcon/>} path="/students/" component={Students}/>
                 <Divider/>
 
-                <Page disabled={!email} title="Календарь" icon={<DateRangeIcon/>} path="/calendar/" component={FormPage}/>
-                <Page disabled={!email} title="Чат" icon={<ChatIcon/>} path="/calendar/" component={VirtualListPage}/>
+                <Page disabled={!email} title="Календарь" icon={<DateRangeIcon/>} path="/calendar/" component={Calendar}/>
+                <Page disabled={!email} title="Чат" icon={<ChatIcon/>} path="/chat/" component={Chat}/>
                 <Divider/>
-                <Page disabled={!email} title="Отчёты" icon={<MonetizationOnIcon/>} path="/calendar/" component={VirtualListPage}/>
+                <Page disabled={!email} title="Отчёты" icon={<MonetizationOnIcon/>} path="/reports/" component={Reports}/>
             </PWA>
         )
     }
