@@ -2,11 +2,40 @@ import React from 'react';
 import './App.css';
 import Index from "./modules/pages/index";
 
+import Info from "./modules/pages/info/info";
+import Quiz from "./modules/pages/quiz/quiz";
+import Card from "./modules/pages/card/card";
 import VirtualListPage from "./modules/pages/virtual-list/virtual-list";
+import SearchPage from "./modules/pages/search/search";
+import SettingsPage from "./modules/pages/settings/settings";
+import FullScreenPage from "./modules/pages/fullscreen/fullscreen";
+
 import Divider from "@material-ui/core/Divider";
+
+import InfoIcon from '@material-ui/icons/Info';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import ToysIcon from '@material-ui/icons/Toys';
+
+import VerticalAlignTopIcon from '@material-ui/icons/VerticalAlignTop';
+import VerticalAlignBottomIcon from '@material-ui/icons/VerticalAlignBottom';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import SearchIcon from '@material-ui/icons/Search';
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import SystemUpdateIcon from '@material-ui/icons/SystemUpdate';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+
+import Slide1 from "./modules/pages/slides/slide1";
+import Slide2 from "./modules/pages/slides/slide2";
+import Slide3 from "./modules/pages/slides/slide3";
 import {SwipeableBottom, SwipeableTop} from "./modules/templates/swipeable";
 import {storage} from "./modules/features/localstorage";
+
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Account from "./modules/pages/account/account";
 import {Page, PWA, Slide} from "./modules/templates/pwa";
 import Hslide from "./modules/pages/slides/hslide";
@@ -15,22 +44,8 @@ import Logout from "./modules/pages/account/logout";
 import Login from "./modules/pages/account/login";
 import Register from "./modules/pages/account/register";
 import Forgot from "./modules/pages/account/forgot";
+import Fab from "./modules/pages/fab/fab";
 import FormPage from "./modules/pages/form/form";
-import ChatIcon from '@material-ui/icons/Chat';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import DvrIcon from '@material-ui/icons/Dvr';
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
-import PublicIcon from '@material-ui/icons/Public';
-import GroupIcon from '@material-ui/icons/Group';
-import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
-import LockIcon from '@material-ui/icons/Lock';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import Contacts from "./modules/pages/teacher/contacts";
-import Diploms from "./modules/pages/teacher/diploms";
-import Experience from "./modules/pages/teacher/experience";
-import Achievements from "./modules/pages/teacher/achievements";
 
 class App extends React.Component {
     constructor(props, context) {
@@ -48,10 +63,17 @@ class App extends React.Component {
         const {name, email} = this.state;
 
         return (
-            <PWA appId="pwa" title="Future Simple School" subtitle="Teacher">
+            <PWA appId="pwa" title="Progressive" subtitle="PWA">
                 <Page title="Главная" path="/" component={Index}/>
 
-                <Page disabled={email} title={"Вход"} icon={<LockOpenIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
+                <Page disabled={!email} title={`${name} (${email})`} icon={<AccountBoxIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
+                    <SwipeableTop>
+                        <Slide auth={{name, email}} title="Выйти" component={Logout}/>
+                        <Slide auth={{name, email}} title="Сменить пароль" component={Change}/>
+                    </SwipeableTop>
+                </Page>
+
+                <Page disabled={email} title={"Вход"} icon={<ExitToAppIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
                     <SwipeableTop>
                         <Slide title="Войти" component={Login}/>
                         <Slide title="Зарегистрироваться" component={Register}/>
@@ -59,33 +81,35 @@ class App extends React.Component {
                     </SwipeableTop>
                 </Page>
 
-                <Page disabled={!email} title={`${name} (${email})`} icon={<LockIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
+                <Divider/>
+
+                <Page title="Верхний слайдер" icon={<VerticalAlignTopIcon/>} path="/top-slider/" component={Hslide}>
                     <SwipeableTop>
-                        <Slide auth={{name, email}} title="Выйти" component={Logout}/>
-                        <Slide auth={{name, email}} title="Сменить пароль" component={Change}/>
+                        <Slide title="Первый" icon={<PermIdentityIcon/>} component={Slide1}/>
+                        <Slide title="Второй" icon={<CloudDownloadIcon/>} component={Slide2}/>
+                        <Slide title="Третий" icon={<SystemUpdateIcon/>} component={Slide3}/>
                     </SwipeableTop>
                 </Page>
 
-                <Divider/>
-                <Page disabled={!email} title="Личные данные" icon={<AccountBoxIcon/>} path="/personal/" component={Hslide}>
+                <Page title="Нижний слайдер" icon={<VerticalAlignBottomIcon/>} path="/bottom-slider/" component={Hslide}>
                     <SwipeableBottom>
-                        <Page title="Контакты" icon={<AccountBoxIcon/>} component={Contacts}/>
-                        <Page title="Дипломы" icon={<VerifiedUserIcon/>} component={Diploms}/>
-                        <Page title="Опыт" icon={<BusinessCenterIcon/>} component={Experience}/>
-                        <Page title="Достижения" icon={<PublicIcon/>} component={Achievements}/>
+                        <Slide title="Первый" icon={<PermIdentityIcon/>} component={Slide1}/>
+                        <Slide title="Второй" icon={<CloudDownloadIcon/>} component={Slide2}/>
+                        <Slide title="Третий" icon={<SystemUpdateIcon/>} component={Slide3}/>
                     </SwipeableBottom>
                 </Page>
+
                 <Divider/>
 
-                <Page disabled={!email} title="Курсы" icon={<DvrIcon/>} path="/courses/" component={VirtualListPage}/>
-                <Page disabled={!email} title="Группы" icon={<GroupIcon/>} path="/courses/" component={VirtualListPage}/>
-                <Page disabled={!email} title="Студенты" icon={<AccessibilityNewIcon/>} path="/students/" component={VirtualListPage}/>
-                <Divider/>
-
-                <Page disabled={!email} title="Календарь" icon={<DateRangeIcon/>} path="/calendar/" component={FormPage}/>
-                <Page disabled={!email} title="Чат" icon={<ChatIcon/>} path="/calendar/" component={VirtualListPage}/>
-                <Divider/>
-                <Page disabled={!email} title="Отчёты" icon={<MonetizationOnIcon/>} path="/calendar/" component={VirtualListPage}/>
+                <Page title="Форма" icon={<ListAltIcon/>} path="/form/" component={FormPage}/>
+                <Page title="Поиск" icon={<SearchIcon/>} path="/search/" component={SearchPage}/>
+                <Page title="Настройки" icon={<MoreVertIcon/>} path="/settings/" component={SettingsPage}/>
+                <Page title="Фуллскрин" icon={<FullscreenIcon/>} path="/fullscreen/" component={FullScreenPage}/>
+                <Page title="Карточка" icon={<CardGiftcardIcon/>} path="/card/" component={Card}/>
+                <Page title="Фаб" icon={<AddCircleOutlineIcon/>} path="/fab/" component={Fab}/>
+                <Page title="Виртуальный список" icon={<FormatListBulletedIcon/>} path="/virtual-list/" component={VirtualListPage}/>
+                <Page title="Квиз" icon={<ToysIcon/>} path="/quiz/" component={Quiz}/>
+                <Page title="Информация" icon={<InfoIcon/>} path="/info/" component={Info}/>
             </PWA>
         )
     }
