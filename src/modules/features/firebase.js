@@ -4,6 +4,7 @@ import {storage} from "./localstorage";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB35ZOMGeY2pkToH7I6vdbvPuxQQq8FCoU",
@@ -17,6 +18,7 @@ const firebaseConfig = {
 };
 const app = firebase.initializeApp(firebaseConfig);
 const auth = app.auth();
+
 auth.onAuthStateChanged((user) => storage("auth", user ? {email: user.email, name: user.displayName} : false));
 
 firebase.firestore().settings({cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED});
@@ -90,4 +92,10 @@ export const DB = (col, onData) => {
     }
 };
 
-
+export const FBStorage = (file, onError, onProgress, onSuccess) => {
+    user.get((user) => {
+        const filename = `images/${settings.appId}/${user.email}/${file.name}/${new Date().getTime()}`;
+        const uploadTask = firebase.storage().ref().child(filename).put(file);
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => onProgress(snapshot.bytesTransferred / snapshot.totalBytes * 100), onError, () => uploadTask.snapshot.ref.getDownloadURL().then(onSuccess));
+    });
+};
