@@ -11,7 +11,7 @@ export default class Achievements extends React.Component {
                 single={false}
                 DBPath="teacher.achievements"
                 fields={[
-                    {id: "photo", title: "Фотография", type: "text"},
+                    {id: "photo", title: "Фотография", type: "image"},
                     {id: "firstname", title: "Имя", type: "text"},
                     {id: "lastname", title: "Фамилия", type: "text"},
                     {id: "patronymic", title: "Отчество", type: "text"},
