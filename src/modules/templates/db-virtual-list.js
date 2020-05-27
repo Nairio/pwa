@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import AddIcon from '@material-ui/icons/Add';
 import Fab from "@material-ui/core/Fab";
 import FabRightBottom from "./fab-right-bottom";
-import DeleteForeverIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 
 export default class DBVirtualList extends React.Component {
