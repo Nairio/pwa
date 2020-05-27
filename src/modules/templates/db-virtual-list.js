@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from "@material-ui/core/Fab";
 import FabRightBottom from "./fab-right-bottom";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import Button from "@material-ui/core/Button";
 
 
 export default class DBVirtualList extends React.Component {
@@ -53,14 +54,21 @@ export default class DBVirtualList extends React.Component {
     render() {
         const {data, modified, index, open, isAdd, item, term} = this.state;
         const {single, fields, template} = this.props;
+
+        if(!term && !open && data.length < 1) return (
+            <FlexBox middle center>
+                <Button variant="contained" color="secondary" onClick={this.onCreate}><AddIcon/> Создать</Button>
+            </FlexBox>
+        );
+
         return (
-            <FlexBox style={{overflow: "hidden"}}>
+            <FlexBox>
                 <Grid spacing={2} container style={{padding: 8}}>
                     <Grid item xs>
                         {(term || (!single && data.length > 0)) && <TextField onChange={this.onFilter} fullWidth placeholder="Поиск..."/>}
                     </Grid>
                     <Grid item>
-                        {(!single || data.length < 1) && <Fab size="small" color="secondary" onClick={this.onCreate}><AddIcon/></Fab>}
+                        {!single && <Fab size="small" color="secondary" onClick={this.onCreate}><AddIcon/></Fab>}
                     </Grid>
                 </Grid>
 
@@ -74,6 +82,7 @@ export default class DBVirtualList extends React.Component {
                     </FlexScroll>
                     {!isAdd && !single && <FabRightBottom size="small" color="secondary" onClick={() => this.DB.delete(item)}><DeleteForeverIcon/></FabRightBottom>}
                 </FullScreen>
+
                 <VirtualList
                     onPull={() => this.DB.load()}
                     data={data}
