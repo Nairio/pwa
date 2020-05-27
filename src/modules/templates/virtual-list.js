@@ -63,7 +63,6 @@ export default class VirtualList extends React.Component {
     componentWillUnmount() {
         this.resize = () => {}
     }
-
     resize() {
         if (!this.parent || this.props.data.length < 1) return;
 
@@ -79,6 +78,7 @@ export default class VirtualList extends React.Component {
         row.style.display = "none";
         fix.style.display = "";
     }
+
     render() {
         const {width, height, itemSize} = this.state;
 
