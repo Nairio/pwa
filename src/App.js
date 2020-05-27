@@ -34,6 +34,7 @@ import Students from "./modules/pages/students/students";
 import Calendar from "./modules/pages/calendar/calendar";
 import Chat from "./modules/pages/chat/chat";
 import Reports from "./modules/pages/reports/reports";
+import Hslide from "./modules/pages/teacher/hslide";
 
 class App extends React.Component {
     constructor(props, context) {
