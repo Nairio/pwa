@@ -8,7 +8,7 @@ import {FlexPullToRefresh} from "./flex";
 export default class VirtualList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {height: 1, width: 1, itemSize: 1};
+        this.state = {height: 1, itemSize: 1};
         this.resize = this.resize.bind(this);
         this.renderRow = this.renderRow.bind(this);
         window.addEventListener("resize", this.resize);
@@ -58,16 +58,15 @@ export default class VirtualList extends React.Component {
         const fix = this.listRef.current._outerRef;
         const itemSize = (r => !r ? 1 : ((h, i) => {r.style.height = null; i = r.clientHeight; r.style.height = h; return i})(r.style.height))(fix.children[0].children[0]);
         const height = (f => ((d, i) => {f.style.display = "none"; i = f.parentElement.clientHeight; f.style.display = d; return i})(f.style.display))(fix);
-        const width = fix.parentElement.clientWidth;
 
-        this.setState({width, height, itemSize});
+        this.setState({height, itemSize});
     }
     render() {
-        const {width, height, itemSize} = this.state;
+        const {height, itemSize} = this.state;
 
         return (
             <FlexPullToRefresh canRefresh={() => this.listRef.current._outerRef.scrollTop === 0} onRefresh={this.props.onPull}>
-                <FixedSizeList ref={this.listRef} width={width} height={height} itemSize={itemSize} itemCount={this.props.data.length}>
+                <FixedSizeList ref={this.listRef} width="100%" height={height} itemSize={itemSize} itemCount={this.props.data.length}>
                     {this.renderRow}
                 </FixedSizeList>
             </FlexPullToRefresh>
