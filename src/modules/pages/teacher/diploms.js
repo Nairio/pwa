@@ -12,17 +12,19 @@ export default class Diploms extends React.Component {
                 DBPath="teacher.diploms"
                 fields={[
                     {id: "photo", title: "Фотография", type: "image"},
-                    {id: "firstname", title: "Имя", type: "text"},
-                    {id: "lastname", title: "Фамилия", type: "text"},
-                    {id: "patronymic", title: "Отчество", type: "text"},
+                    {id: "title", title: "Название диплома", type: "text"},
+                    {id: "institution", title: "Учебное заведение", type: "text"},
+                    {id: "specialty", title: "Специальность", type: "text"},
+                    {id: "description", title: "Описание", type: "text"},
                 ]}
                 template={(item, onEdit) => (
                     <ListItem button alignItems="flex-start" onClick={onEdit}>
                         {item.photo && <ListItemAvatar><Avatar src={item.photo}/></ListItemAvatar>}
                         <List>
-                            <ListItem>Имя: {item.firstname}</ListItem>
-                            <ListItem>Фамилия: {item.lastname}</ListItem>
-                            <ListItem>Отчество: {item.patronymic}</ListItem>
+                            <ListItem>{item.title}</ListItem>
+                            <ListItem>{item.institution}</ListItem>
+                            <ListItem>{item.specialty}</ListItem>
+                            <ListItem>{item.description}</ListItem>
                         </List>
                     </ListItem>
                 )}

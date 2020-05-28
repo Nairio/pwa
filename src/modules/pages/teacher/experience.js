@@ -11,10 +11,10 @@ export default class Experience extends React.Component {
                 single={false}
                 DBPath="teacher.experience"
                 fields={[
-                    {id: "photo", title: "Фотография", type: "image"},
-                    {id: "firstname", title: "Имя", type: "text"},
-                    {id: "lastname", title: "Фамилия", type: "text"},
-                    {id: "patronymic", title: "Отчество", type: "text"},
+                    {id: "organization", title: "Организация", type: "text"},
+                    {id: "position", title: "Должность", type: "text"},
+                    {id: "start", title: "Дата начала", type: "date"},
+                    {id: "end", title: "Дата окончания", type: "date"},
                 ]}
                 template={(item, onEdit) => (
                     <ListItem button alignItems="flex-start" onClick={onEdit}>
