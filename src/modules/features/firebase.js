@@ -55,17 +55,17 @@ const user = {get: (cb) => user.u ? cb(user.u) : auth.onAuthStateChanged(u => u 
 
 export const DB = (col, onData) => {
     let index = 0;
-    let sort = 0;
+    let _sort = 0;
     let data = [];
 
-    const filter = {t: "", set: (t, cb) => cb(filter.t = t.toLowerCase()), do: d => filter.t ? d.filter(i => JSON.stringify(i).toLowerCase().includes(filter.t)) : d};
+    const filter = {t: "", set: (t, cb) => cb(filter.t = t.toLowerCase()), do: d => filter.t ? d.filter(({_sort, _id, ...i}) => Object.values(i).join(" ").toLowerCase().includes(filter.t)) : d};
     const getFirestoreDB = (cb) => user.get((user) => cb(firebase.firestore().collection(settings.appId).doc(user.email).collection(col)));
 
-    getFirestoreDB((db) => db.orderBy("sort", "asc").onSnapshot((snapshot) => {
+    getFirestoreDB((db) => db.orderBy("_sort", "asc").onSnapshot((snapshot) => {
         snapshot.docChanges().forEach(({type, doc}) => {
             const item = {...doc.data(), _id: doc.id};
 
-            sort = Math.max(sort, item.sort);
+            _sort = Math.max(_sort, item._sort);
 
             if (type === "added") {
                 index = data.push(item) - 1;
@@ -85,7 +85,7 @@ export const DB = (col, onData) => {
     return {
         close: () => {onData = () => {}},
         load: () => getFirestoreDB((db) => db.get()),
-        add: (item) => getFirestoreDB((db) => db.add({...item, sort: sort + 1})),
+        add: (item) => getFirestoreDB((db) => db.add({...item, _sort: _sort + 1})),
         change: ({_id, ...item}) => getFirestoreDB((db) => db.doc(_id).set(item)),
         delete: ({_id, title}) => window.confirm(`Удалить "${title}"?`) && getFirestoreDB((db) => db.doc(_id).delete()),
         filter: (term) => filter.set(term, () => onData({data: filter.do(data), index: 0}))
