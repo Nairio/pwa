@@ -11,18 +11,16 @@ export default class Achievements extends React.Component {
                 single={false}
                 DBPath="teacher.achievements"
                 fields={[
+                    {id: "title", title: "Название", type: "text"},
+                    {id: "description", title: "Описание", type: "text"},
                     {id: "photo", title: "Фотография", type: "image"},
-                    {id: "firstname", title: "Имя", type: "text"},
-                    {id: "lastname", title: "Фамилия", type: "text"},
-                    {id: "patronymic", title: "Отчество", type: "text"},
                 ]}
                 template={(item, onEdit) => (
                     <ListItem button alignItems="flex-start" onClick={onEdit}>
                         {item.photo && <ListItemAvatar><Avatar src={item.photo}/></ListItemAvatar>}
                         <List>
-                            <ListItem>Имя: {item.firstname}</ListItem>
-                            <ListItem>Фамилия: {item.lastname}</ListItem>
-                            <ListItem>Отчество: {item.patronymic}</ListItem>
+                            <ListItem>{item.title}</ListItem>
+                            <ListItem>{item.description}</ListItem>
                         </List>
                     </ListItem>
                 )}
