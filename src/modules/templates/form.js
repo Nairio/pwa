@@ -9,7 +9,7 @@ export const Field = () => false;
 Field.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(["hidden", "disabled", "image", "text"]).isRequired,
+    type: PropTypes.oneOf(["hidden", "disabled", "image", "text", "date", "time"]).isRequired,
 };
 
 
@@ -25,7 +25,9 @@ export class Form extends React.Component{
                     <React.Fragment key={id}>
                         {type === "disabled" && <TextField disabled autoComplete="off" fullWidth name={id} label={title} defaultValue={value}/>}
                         {type === "image" && <LoadableImage src={value} name={id} title={title}/>}
-                        {type === "text" && <TextField autoComplete="off" fullWidth autoFocus={autoFocus} name={id} label={title} defaultValue={value}/>}
+                        {type === "text" && <TextField name={id} label={title} type="text" fullWidth defaultValue={value} autoComplete="off" autoFocus={autoFocus}/>}
+                        {type === "date" && <TextField name={id} label={title} type="date" fullWidth defaultValue={value} autoComplete="off" InputLabelProps={{shrink: true}}/>}
+                        {type === "time" && <TextField name={id} label={title} type="time" fullWidth defaultValue={value} autoComplete="off" InputLabelProps={{shrink: true}}/>}
                         {type === "text" && (autoFocus = false)}
                     </React.Fragment>
                 ))}
