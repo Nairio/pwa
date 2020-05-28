@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar, ListItem, ListItemAvatar, List} from "@material-ui/core";
+import {Avatar, ListItem, ListItemAvatar} from "@material-ui/core";
 
 import DBVirtualList from "../../templates/db-virtual-list";
 
@@ -19,11 +19,7 @@ export default class Experience extends React.Component {
                 template={(item, onEdit) => (
                     <ListItem button alignItems="flex-start" onClick={onEdit}>
                         {item.photo && <ListItemAvatar><Avatar src={item.photo}/></ListItemAvatar>}
-                        <List>
-                            <ListItem>Имя: {item.firstname}</ListItem>
-                            <ListItem>Фамилия: {item.lastname}</ListItem>
-                            <ListItem>Отчество: {item.patronymic}</ListItem>
-                        </List>
+                        {item.organization} {item.position} {new Date(item.start).toLocaleDateString()} {item.end && ` - ${new Date(item.end).toLocaleDateString()}`}
                     </ListItem>
                 )}
             />
