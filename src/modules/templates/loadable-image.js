@@ -56,7 +56,7 @@ export class LoadableImage extends React.Component {
                 </FullScreen>
                 <Grid container spacing={2} alignItems="flex-end">
                     <Grid item xs>
-                        <TextField fullWidth name={this.props.name} label={this.props.title} value={url} onChange={e => this.setState({url: e.target.value})}/>
+                        <TextField  autoComplete="off" fullWidth name={this.props.name} label={this.props.title} value={url} onChange={e => this.setState({url: e.target.value})}/>
                     </Grid>
                     <Grid item>
                         <IconButton color="secondary" onClick={this.onFile}>
