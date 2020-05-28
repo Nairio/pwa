@@ -20,10 +20,8 @@ export default class Courses extends React.Component {
                     single={false}
                     DBPath="teacher.courses"
                     fields={[
-                        {id: "photo", title: "Фотография", type: "image"},
-                        {id: "firstname", title: "Имя", type: "text"},
-                        {id: "lastname", title: "Фамилия", type: "text"},
-                        {id: "patronymic", title: "Отчество", type: "text"},
+                        {id: "name", title: "Название", type: "text"},
+                        {id: "description", title: "Описание", type: "text"},
                     ]}
                     template={(item, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>

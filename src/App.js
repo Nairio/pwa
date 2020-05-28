@@ -28,7 +28,7 @@ import Contacts from "./modules/pages/teacher/contacts";
 import Diploms from "./modules/pages/teacher/diploms";
 import Experience from "./modules/pages/teacher/experience";
 import Achievements from "./modules/pages/teacher/achievements";
-import Courses from "./modules/pages/courses/courses";
+import Courses from "./modules/pages/teacher/courses";
 import Groups from "./modules/pages/groups/groups";
 import Students from "./modules/pages/students/students";
 import Calendar from "./modules/pages/calendar/calendar";
