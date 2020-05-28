@@ -19,9 +19,11 @@ export default class VirtualList extends React.Component {
     renderRow({style, index}) {
         const {data, divider} = this.props;
 
-        const [item, setItem] = React.useState(data[index]);
+        const i = index < 0 ? 0 : index;
+
+        const [item, setItem] = React.useState(data[i]);
         this.setItem[index] = setItem;
-        item !== data[index] && setItem(data[index]);
+        item !== data[i] && setItem(data[i]);
 
         return (
             <div style={style}>

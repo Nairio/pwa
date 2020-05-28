@@ -6,8 +6,6 @@ import GoHome from "../../header/go-home";
 import HeaderTitle from "../../header/header-title";
 
 import {Avatar, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from '@material-ui/icons/Edit';
 import DBVirtualList from "../../templates/db-virtual-list";
 import FabRightBottom from "../../templates/fab-right-bottom";
 import AddIcon from '@material-ui/icons/Add';
@@ -39,10 +37,9 @@ export default class VirtualListPage extends React.Component {
                             <FabRightBottom size="small" color="secondary" onClick={onDelete}><DeleteForeverIcon/></FabRightBottom>
                         )}
                         template={(item, onEdit) => (
-                            <ListItem button alignItems="flex-start">
+                            <ListItem button alignItems="flex-start" onClick={onEdit}>
                                 {item.img && <ListItemAvatar><Avatar src={item.img}/></ListItemAvatar>}
                                 <ListItemText inset={!item.img} primary={`${item.title} ${item.text}`} secondary={item._id}/>
-                                <IconButton onClick={onEdit}><EditIcon/></IconButton>
                             </ListItem>
                         )}
                     />
