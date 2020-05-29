@@ -25,7 +25,7 @@ export default class Groups extends React.Component {
                         {id: "age_from", title: "Возраст от", type: "text"},
                         {id: "age_to", title: "Возраст до", type: "text"},
                         {id: "count", title: "Количество человек", type: "text"},
-                        {id: "duration", title: "Продолжительность, часов", type: "text"},
+                        {id: "course", title: "Курс", type: "dbautocomplete", dbpath: "teacher.courses", dblabel: "name"},
                     ]}
                     template={({name, address, age_from, age_to, count, duration}, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
