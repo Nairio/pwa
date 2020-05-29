@@ -23,7 +23,7 @@ export default class DBVirtualList extends React.Component {
         this.onEdit = this.onEdit.bind(this);
         this.onFilter = this.onFilter.bind(this);
 
-        this.DBPath = this.props.DBPath;
+        this.dbpath = this.props.dbpath;
     }
 
     onClose() {
@@ -44,7 +44,7 @@ export default class DBVirtualList extends React.Component {
     }
 
     componentDidMount() {
-        this.DB = DB(this.DBPath, ({data, index}) => this.setState({data, index, modified: new Date()}));
+        this.DB = DB(this.dbpath, ({data, index}) => this.setState({data, index, modified: new Date()}));
         this.DB.load();
     }
 
@@ -79,7 +79,7 @@ export default class DBVirtualList extends React.Component {
                     <FlexScroll>
                         <FlexBox middle center>
                             <Form item={item} onSubmit={item => this.onClose(isAdd ? this.DB.add(item) : this.DB.change(item))}>
-                                {fields.map(({id, type, title}) => <Field key={id} id={id} type={type} title={title}/>)}
+                                {fields.map(({id, type, title, dbpath, dblabel}) => <Field key={id} id={id} type={type} title={title} dbpath={dbpath} dblabel={dblabel}/>)}
                             </Form>
                         </FlexBox>
                     </FlexScroll>

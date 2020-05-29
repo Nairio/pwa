@@ -22,13 +22,13 @@ export default class VirtualListPage extends React.Component {
                 <FlexBox>
                     <DBVirtualList
                         single={false}
-                        DBPath="data"
+                        dbpath="data"
                         fields={[
                             {id: "_id", title: "Идентификатор", type: "disabled"},
-                            {id: "sort", title: "Сортировка", type: "disabled"},
+                            {id: "_sort", title: "Сортировка", type: "disabled"},
                             {id: "img", title: "Иконка", type: "image"},
                             {id: "title", title: "Название", type: "text"},
-                            {id: "text", title: "Текст", type: "text"},
+                            {id: "text", title: "Текст", type: "dbautocomplete", dbpath: "data", dblabel: "title"},
                         ]}
                         createButton={(onCreate) => (
                             <FabRightBottom color="secondary" onClick={onCreate}><AddIcon/></FabRightBottom>
