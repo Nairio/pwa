@@ -18,7 +18,7 @@ export default class Groups extends React.Component {
                 </Header>
                 <DBVirtualList
                     single={false}
-                    DBPath="teacher.groups"
+                    dbPath="teacher.groups"
                     fields={[
                         {id: "name", title: "Название", type: "text"},
                         {id: "address", title: "Адрес", type: "text"},

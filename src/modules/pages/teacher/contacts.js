@@ -8,7 +8,7 @@ export default class Contacts extends React.Component {
         return (
             <DBVirtualList
                 single={true}
-                DBPath="teacher.contacts"
+                dbPath="teacher.contacts"
                 fields={[
                     {id: "photo", title: "Фотография", type: "image"},
                     {id: "firstname", title: "Имя", type: "text"},

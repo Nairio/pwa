@@ -19,18 +19,18 @@ export class Form extends React.Component{
     render() {
         let autoFocus = true;
         const items = [];
-        this.props.children.forEach(({props: {id, type, title, dbpath, dblabel}}) => items.push({id, type, title, dbpath, dblabel}));
+        this.props.children.forEach(({props: {id, type, title, dbPath, dblabel}}) => items.push({id, type, title, dbPath, dblabel}));
         Object.entries(this.props.item).forEach(([id, value]) => (i => i >= 0 ? items[i].value = value : items.push({id, type: "hidden", title: id, value}))(items.findIndex((item) => item.id === id)));
         return (
             <form style={{margin: 16}} onSubmit={e => e.preventDefault() || this.props.onSubmit({...this.props.item, ...Object.fromEntries(new FormData(e.target))})}>
-                {items.map(({id, type, title, value, dbpath, dblabel}) => (
+                {items.map(({id, type, title, value, dbPath, dblabel}) => (
                     <React.Fragment key={id}>
                         {type === "disabled" && <TextField disabled autoComplete="off" fullWidth name={id} label={title} defaultValue={value}/>}
                         {type === "image" && <LoadableImage src={value} name={id} title={title}/>}
                         {type === "text" && <TextField name={id} label={title} type="text" fullWidth defaultValue={value} autoComplete="off" autoFocus={autoFocus}/>}
                         {type === "date" && <TextField name={id} label={title} type="date" fullWidth defaultValue={value} autoComplete="off" InputLabelProps={{shrink: true}}/>}
                         {type === "time" && <TextField name={id} label={title} type="time" fullWidth defaultValue={value} autoComplete="off" InputLabelProps={{shrink: true}}/>}
-                        {type === "dbautocomplete" && <AutocompleteSelect dbpath={dbpath} dblabel={dblabel} name={id} label={title} fullWidth defaultValue={value} autoComplete="off"/>}
+                        {type === "dbautocomplete" && <AutocompleteSelect dbPath={dbPath} dblabel={dblabel} name={id} label={title} fullWidth defaultValue={value} autoComplete="off"/>}
                         {type === "text" && (autoFocus = false)}
                     </React.Fragment>
                 ))}

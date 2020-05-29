@@ -9,7 +9,7 @@ export default class Experience extends React.Component {
         return (
             <DBVirtualList
                 single={false}
-                DBPath="teacher.experience"
+                dbPath="teacher.experience"
                 fields={[
                     {id: "organization", title: "Организация", type: "text"},
                     {id: "position", title: "Должность", type: "text"},

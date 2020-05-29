@@ -18,7 +18,7 @@ export default class Courses extends React.Component {
                 </Header>
                 <DBVirtualList
                     single={false}
-                    DBPath="teacher.courses"
+                    dbPath="teacher.courses"
                     fields={[
                         {id: "name", title: "Название", type: "text"},
                         {id: "description", title: "Описание", type: "text"},

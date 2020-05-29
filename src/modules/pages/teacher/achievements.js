@@ -10,7 +10,7 @@ export default class Achievements extends React.Component {
         return (
             <DBVirtualList
                 single={false}
-                DBPath="teacher.achievements"
+                dbPath="teacher.achievements"
                 fields={[
                     {id: "title", title: "Название", type: "text"},
                     {id: "description", title: "Описание", type: "text"},

@@ -9,7 +9,7 @@ export default class Diploms extends React.Component {
         return (
             <DBVirtualList
                 single={false}
-                DBPath="teacher.diploms"
+                dbPath="teacher.diploms"
                 fields={[
                     {id: "photo", title: "Фотография", type: "image"},
                     {id: "title", title: "Название диплома", type: "text"},

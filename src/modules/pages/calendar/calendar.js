@@ -9,7 +9,7 @@ export default class Calendar extends React.Component {
         return (
             <DBVirtualList
                 single={false}
-                DBPath="teacher.calendar"
+                dbPath="teacher.calendar"
                 fields={[
                     {id: "photo", title: "Фотография", type: "image"},
                     {id: "firstname", title: "Имя", type: "text"},
