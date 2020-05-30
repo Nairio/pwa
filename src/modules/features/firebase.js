@@ -94,7 +94,8 @@ export const DB = (col, onData) => {
 
 export const FBStorage = (file, onError, onProgress, onSuccess) => {
     user.get((user) => {
-        const filename = `${settings.appId}/${user.email}/${new Date().getTime() + file.name}`;
+        const name = (n => {n.splice(n.length > 1 ? -1 : 1, 0, new Date().getTime());return n.join(".")})(file.name.split("."));
+        const filename = `${settings.appId}/${user.email}/${name}`;
         const uploadTask = firebase.storage().ref().child(filename).put(file);
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => onProgress(Math.round(snapshot.bytesTransferred / snapshot.totalBytes * 100)), onError, () => uploadTask.snapshot.ref.getDownloadURL().then(onSuccess));
     });
