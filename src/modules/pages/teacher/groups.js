@@ -40,16 +40,30 @@ export default class Groups extends React.Component {
                     single={false}
                     dbpath="teacher.groups"
                     fields={[
+                        {id: "courses", title: "Курс", type: "dbautocomplete", dbpath: "teacher.courses", dblabel: "name"},
                         {id: "name", title: "Название", type: "text"},
                         {id: "address", title: "Адрес", type: "text"},
-                        {id: "courses", title: "Курс", type: "dbautocomplete", dbpath: "teacher.courses", dblabel: "name"},
+                        {id: "monday", title: "Понедельник", type: "time"},
+                        {id: "tuesday", title: "Вторник", type: "time"},
+                        {id: "wednesday", title: "Среда", type: "time"},
+                        {id: "thursday", title: "Четверг", type: "time"},
+                        {id: "friday", title: "Пятница", type: "time"},
+                        {id: "saturday", title: "Суббота", type: "time"},
+                        {id: "sunday", title: "Воскресенье", type: "time"},
                     ]}
-                    template={({name, address, count, duration, courses}, onEdit) => (
+                    template={(item, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
                             <div>
-                                <p>Название: {name}</p>
-                                <p>Адрес: {address}</p>
-                                <p>Курс: {this.state.courses[courses]}</p>
+                                <p>Курс: {this.state.courses[item.courses]}</p>
+                                <p>Название: {item.name}</p>
+                                <p>Адрес: {item.address}</p>
+                                {item.monday && <p>Понедельник: {item.monday}</p>}
+                                {item.tuesday && <p>Вторник: {item.tuesday}</p>}
+                                {item.wednesday && <p>Среда: {item.wednesday}</p>}
+                                {item.thursday && <p>Четверг: {item.thursday}</p>}
+                                {item.friday && <p>Пятница: {item.friday}</p>}
+                                {item.saturday && <p>Суббота: {item.saturday}</p>}
+                                {item.sunday && <p>Воскресенье: {item.sunday}</p>}
                             </div>
                         </ListItem>
                     )}

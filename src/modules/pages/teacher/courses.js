@@ -43,19 +43,22 @@ export default class Courses extends React.Component {
                         {id: "name", title: "Название", type: "text"},
                         {id: "description", title: "Описание", type: "text"},
                         {id: "program", title: "Программа", type: "text"},
-                        {id: "age_from", title: "Возраст от", type: "text"},
-                        {id: "age_to", title: "Возраст до", type: "text"},
-                        {id: "count", title: "Количество в группе", type: "text"},
-                        {id: "program", title: "Программа", type: "text"},
+                        {id: "duration", title: "Продолжительность, ак. часов", type: "number"},
+                        {id: "level", title: "Уровень", type: "text"},
+                        {id: "age_from", title: "Возраст от", type: "number"},
+                        {id: "age_to", title: "Возраст до", type: "number"},
+                        {id: "count_in_group", title: "Количество в группе", type: "number"},
                     ]}
-                    template={({name, description, age_from, age_to, duration, _id}, onEdit) => (
+                    template={({name, description, level, duration, age_from, age_to, count_in_group, _id}, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
                             <div>
                                 <h3>{name}</h3>
                                 <p>{description}</p>
+                                <p>Уровень: {level}</p>
+                                <p>Продолжительность: {duration || 0} ак. часов</p>
                                 <p>Возраст: {age_from}-{age_to}</p>
                                 <p><a href="#">Программа</a></p>
-                                <p>Количество групп: {this.state.groups[_id] ? this.state.groups[_id].length :  0}</p>
+                                <p>Количество групп: {this.state.groups[_id] ? this.state.groups[_id].length :  0} по {count_in_group || 0} студентов</p>
                             </div>
                         </ListItem>
                     )}
