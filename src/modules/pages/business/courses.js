@@ -12,13 +12,13 @@ import {DB} from "../../features/firebase";
 export default class Courses extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {}
+        this.state = {courses: false};
     }
 
     componentDidMount() {
-        this.DB = DB("teacher.groups", ({data}) => {
-            const groups = data.reduce((s, item) => ({...s, [item.courses]: [...(s[item.courses] || []), item]}), {});
-            this.setState({groups});
+        this.DB = DB("subjects", ({data}) => {
+            const subjects = data.reduce((s, {_id, name}) => ({...s, [_id]: name}), {});
+            this.setState({subjects});
         });
         this.DB.load();
     }
@@ -28,7 +28,7 @@ export default class Courses extends React.Component {
     }
 
     render() {
-        if (!this.state.groups) return false;
+        if (!this.state.subjects) return false;
 
         return (
             <FlexBox>
@@ -38,27 +38,32 @@ export default class Courses extends React.Component {
                 </Header>
                 <DBVirtualList
                     single={false}
-                    dbpath="teacher.courses"
+                    dbpath="courses"
                     fields={[
+                        {id: "subjects", title: "Предмет", type: "dbautocomplete", dbpath: "subjects", dblabel: "name"},
                         {id: "name", title: "Название", type: "text"},
                         {id: "description", title: "Описание", type: "text"},
                         {id: "program", title: "Программа", type: "doc"},
-                        {id: "duration", title: "Продолжительность, ак. часов", type: "number"},
                         {id: "level", title: "Уровень", type: "text"},
+
                         {id: "age_from", title: "Возраст от", type: "number"},
                         {id: "age_to", title: "Возраст до", type: "number"},
+                        {id: "duration", title: "Продолжительность, ак. часов", type: "number"},
                         {id: "count_in_group", title: "Количество в группе", type: "number"},
+                        {id: "cost", title: "Стоимость за ак. час, ₽", type: "number"},
                     ]}
-                    template={({name, description, program, level, duration, age_from, age_to, count_in_group, _id}, onEdit) => (
+                    template={({name, description, subjects, program, level, cost, duration, age_from, age_to, count_in_group, _id}, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
                             <div>
+                                <h2>{this.state.subjects[subjects]}</h2>
                                 <h3>{name}</h3>
                                 <p>{description}</p>
                                 <p>Уровень: {level}</p>
-                                <p>Продолжительность: {duration || 0} ак. часов</p>
                                 <p>Возраст: {age_from}-{age_to}</p>
-                                <p><a onClick={e=>e.stopPropagation()} href={program} rel="noopener noreferrer" target="_blank">Программа</a></p>
-                                <p>Количество групп: {this.state.groups[_id] ? this.state.groups[_id].length :  0} по {count_in_group || 0} студентов</p>
+                                <p>Продолжительность: {duration || 0} ак. часов</p>
+                                <p>Стоимость: <b>{cost || 0}</b> ₽ / час</p>
+                                {program && <p><a onClick={e=>e.stopPropagation()} href={program} rel="noopener noreferrer" target="_blank">Программа</a></p>}
+                                {!program && <p>Программа</p>}
                             </div>
                         </ListItem>
                     )}

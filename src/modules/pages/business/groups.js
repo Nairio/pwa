@@ -12,23 +12,31 @@ import {DB} from "../../features/firebase";
 export default class Groups extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {courses: false};
+        this.state = {courses: false, places: false};
     }
 
     componentDidMount() {
-        this.DB = DB("teacher.courses", ({data}) => {
+        this.DB = DB("courses", ({data}) => {
             const courses = data.reduce((s, {_id, name}) => ({...s, [_id]: name}), {});
             this.setState({courses});
         });
         this.DB.load();
+
+        this.DB2 = DB("places", ({data}) => {
+            const places = data.reduce((s, {_id, name}) => ({...s, [_id]: name}), {});
+            this.setState({places});
+        });
+        this.DB2.load();
     }
 
     componentWillUnmount() {
-        this.DB.close()
+        this.DB.close();
+        this.DB2.close()
     }
 
     render() {
         if (!this.state.courses) return false;
+        if (!this.state.places) return false;
 
         return (
             <FlexBox>
@@ -38,11 +46,12 @@ export default class Groups extends React.Component {
                 </Header>
                 <DBVirtualList
                     single={false}
-                    dbpath="teacher.groups"
+                    dbpath="groups"
                     fields={[
-                        {id: "courses", title: "Курс", type: "dbautocomplete", dbpath: "teacher.courses", dblabel: "name"},
                         {id: "name", title: "Название", type: "text"},
-                        {id: "address", title: "Адрес", type: "text"},
+                        {id: "courses", title: "Курс", type: "dbautocomplete", dbpath: "courses", dblabel: "name"},
+                        {id: "places", title: "Место", type: "dbautocomplete", dbpath: "places", dblabel: "name"},
+
                         {id: "monday", title: "Понедельник", type: "time"},
                         {id: "tuesday", title: "Вторник", type: "time"},
                         {id: "wednesday", title: "Среда", type: "time"},
@@ -56,7 +65,7 @@ export default class Groups extends React.Component {
                             <div>
                                 <p>Курс: {this.state.courses[item.courses]}</p>
                                 <p>Название: {item.name}</p>
-                                <p>Адрес: {item.address}</p>
+                                <p>Адрес: {this.state.places[item.places]}</p>
                                 {item.monday && <p>Понедельник: {item.monday}</p>}
                                 {item.tuesday && <p>Вторник: {item.tuesday}</p>}
                                 {item.wednesday && <p>Среда: {item.wednesday}</p>}

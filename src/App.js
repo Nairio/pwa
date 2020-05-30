@@ -24,17 +24,23 @@ import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import Contacts from "./modules/pages/teacher/contacts";
-import Diploms from "./modules/pages/teacher/diploms";
-import Experience from "./modules/pages/teacher/experience";
-import Achievements from "./modules/pages/teacher/achievements";
-import Courses from "./modules/pages/teacher/courses";
-import Groups from "./modules/pages/teacher/groups";
-import Students from "./modules/pages/teacher/students";
+import Contacts from "./modules/pages/business/contacts";
+import Diploms from "./modules/pages/business/diploms";
+import Experience from "./modules/pages/business/experience";
+import Achievements from "./modules/pages/business/achievements";
+import Courses from "./modules/pages/business/courses";
+import Groups from "./modules/pages/business/groups";
+import Students from "./modules/pages/business/students";
 import Calendar from "./modules/pages/calendar/calendar";
 import Chat from "./modules/pages/chat/chat";
 import Reports from "./modules/pages/reports/reports";
-import Hslide from "./modules/pages/teacher/hslide";
+import Hslide from "./modules/pages/business/hslide";
+import Places from "./modules/pages/business/places";
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import CategoryIcon from '@material-ui/icons/Category';
+import Subjects from "./modules/pages/business/subjects";
+import HowToRegIcon from '@material-ui/icons/HowToReg';
+import Teachers from "./modules/pages/business/teachers";
 
 class App extends React.Component {
     constructor(props, context) {
@@ -52,7 +58,7 @@ class App extends React.Component {
         const {name, email} = this.state;
 
         return (
-            <PWA appId="pwa" title="Future Simple School" subtitle="Teacher">
+            <PWA appId="pwa" title="Future Simple School" subtitle="Business">
                 <Page title="Главная" path="/" component={Index}/>
 
                 <Page disabled={email} title={"Вход"} icon={<LockOpenIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
@@ -81,8 +87,13 @@ class App extends React.Component {
                 </Page>
                 <Divider/>
 
+
+                <Page disabled={!email} title="Места" icon={<AccountBalanceIcon/>} path="/places/" component={Places}/>
+                <Page disabled={!email} title="Предметы" icon={<CategoryIcon/>} path="/subjects/" component={Subjects}/>
                 <Page disabled={!email} title="Курсы" icon={<DvrIcon/>} path="/courses/" component={Courses}/>
                 <Page disabled={!email} title="Группы" icon={<GroupIcon/>} path="/groups/" component={Groups}/>
+                <Page disabled={!email} title="Преподаватели" icon={<HowToRegIcon/>} path="/teachers/" component={Teachers}/>
+
                 <Page disabled={!email} title="Студенты" icon={<AccessibilityNewIcon/>} path="/students/" component={Students}/>
                 <Divider/>
 

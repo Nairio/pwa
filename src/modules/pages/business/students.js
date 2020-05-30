@@ -16,7 +16,7 @@ export default class Students extends React.Component {
     }
 
     componentDidMount() {
-        this.DB = DB("teacher.groups", ({data}) => {
+        this.DB = DB("business.groups", ({data}) => {
             const groups = data.reduce((s, {_id, name}) => ({...s, [_id]: name}), {});
             this.setState({groups});
         });
@@ -43,7 +43,7 @@ export default class Students extends React.Component {
                         {id: "firstname", title: "Имя", type: "text"},
                         {id: "lastname", title: "Фамилия", type: "text"},
                         {id: "patronymic", title: "Отчество", type: "text"},
-                        {id: "groups", title: "Группа", type: "dbautocomplete", dbpath: "teacher.groups", dblabel: "name"},
+                        {id: "groups", title: "Группа", type: "dbautocomplete", dbpath: "business.groups", dblabel: "name"},
                     ]}
                     template={(item, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
