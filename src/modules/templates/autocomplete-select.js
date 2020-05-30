@@ -6,7 +6,7 @@ import {DB} from "../features/firebase";
 
 
 export default function AutocompleteSelect({defaultValue, name, dbpath, dblabel, ...props}) {
-    const [item, setItem] = React.useState({[dblabel]: "", _id: ""});
+    const [item, setItem] = React.useState({_id: ""});
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
     const loading = open && options.length === 0;
@@ -30,7 +30,7 @@ export default function AutocompleteSelect({defaultValue, name, dbpath, dblabel,
                 onClose={() => setOpen(false)}
                 onChange={(event, newValue) => setItem(newValue)}
                 getOptionSelected={(option, value) => option._id === value._id}
-                getOptionLabel={(option) => option[dblabel]}
+                getOptionLabel={(option) => typeof dblabel==="function" ? dblabel(option) : option[dblabel]}
                 options={options}
                 loading={loading}
                 value={item}
