@@ -27,16 +27,24 @@ export default class Groups extends React.Component {
             this.setState({places});
         });
         this.DB2.load();
+
+        this.DB3 = DB("teachers", ({data}) => {
+            const teachers = data.reduce((s, {_id, ...item}) => ({...s, [_id]: item}), {});
+            this.setState({teachers});
+        });
+        this.DB3.load();
     }
 
     componentWillUnmount() {
         this.DB.close();
-        this.DB2.close()
+        this.DB2.close();
+        this.DB3.close()
     }
 
     render() {
         if (!this.state.courses) return false;
         if (!this.state.places) return false;
+        if (!this.state.teachers) return false;
 
         return (
             <FlexBox>
@@ -51,6 +59,7 @@ export default class Groups extends React.Component {
                         {id: "name", title: "Название", type: "text"},
                         {id: "courses", title: "Курс", type: "dbautocomplete", dbpath: "courses", dblabel: "name"},
                         {id: "places", title: "Место", type: "dbautocomplete", dbpath: "places", dblabel: "name"},
+                        {id: "teachers", title: "Преподаватель", type: "dbautocomplete", dbpath: "teachers", dblabel: "firstname"},
 
                         {id: "monday", title: "Понедельник", type: "time"},
                         {id: "tuesday", title: "Вторник", type: "time"},
@@ -66,6 +75,7 @@ export default class Groups extends React.Component {
                                 <p>Курс: {this.state.courses[item.courses]}</p>
                                 <p>Название: {item.name}</p>
                                 <p>Адрес: {this.state.places[item.places]}</p>
+                                <p>Преподаватель: {(({firstname, lastname, patronymic})=>`${lastname} ${firstname} ${patronymic}`)(this.state.teachers[item.teachers])}</p>
                                 {item.monday && <p>Понедельник: {item.monday}</p>}
                                 {item.tuesday && <p>Вторник: {item.tuesday}</p>}
                                 {item.wednesday && <p>Среда: {item.wednesday}</p>}

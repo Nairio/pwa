@@ -6,7 +6,6 @@ import Header from "../../header/header";
 import GoHome from "../../header/go-home";
 import HeaderTitle from "../../header/header-title";
 import {FlexBox} from "../../templates/flex";
-import {DB} from "../../features/firebase";
 
 
 export default class Places extends React.Component {

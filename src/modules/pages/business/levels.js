@@ -8,7 +8,7 @@ import HeaderTitle from "../../header/header-title";
 import {FlexBox} from "../../templates/flex";
 
 
-export default class Subjects extends React.Component {
+export default class Levels extends React.Component {
     render() {
         return (
             <FlexBox>
@@ -18,16 +18,16 @@ export default class Subjects extends React.Component {
                 </Header>
                 <DBVirtualList
                     single={false}
-                    dbpath="subjects"
+                    dbpath="levels"
                     fields={[
-                        {id: "name", title: "Название", type: "text"},
-                        {id: "description", title: "Описание", type: "text"},
+                        {id: "levels", title: "Уровень", type: "number"},
+                        {id: "salary", title: "Зарплата в час", type: "number"},
                     ]}
-                    template={({name, description, subject, program, level, cost, duration, age_from, age_to, count_in_group, _id}, onEdit) => (
+                    template={({levels, salary}, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
                             <div>
-                                <h3>{name}</h3>
-                                <p>{description}</p>
+                                <p>Уровень: {levels}</p>
+                                <p>Зарплата: {salary} ₽ в час</p>
                             </div>
                         </ListItem>
                     )}

@@ -41,6 +41,7 @@ import CategoryIcon from '@material-ui/icons/Category';
 import Subjects from "./modules/pages/business/subjects";
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import Teachers from "./modules/pages/business/teachers";
+import Levels from "./modules/pages/business/levels";
 
 class App extends React.Component {
     constructor(props, context) {
@@ -87,7 +88,7 @@ class App extends React.Component {
                 </Page>
                 <Divider/>
 
-
+                <Page disabled={!email} title="Уровни" icon={<MonetizationOnIcon/>} path="/levels/" component={Levels}/>
                 <Page disabled={!email} title="Места" icon={<AccountBalanceIcon/>} path="/places/" component={Places}/>
                 <Page disabled={!email} title="Предметы" icon={<CategoryIcon/>} path="/subjects/" component={Subjects}/>
                 <Page disabled={!email} title="Курсы" icon={<DvrIcon/>} path="/courses/" component={Courses}/>
