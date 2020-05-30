@@ -6,10 +6,29 @@ import {FlexBox} from "../../templates/flex";
 import Header from "../../header/header";
 import GoHome from "../../header/go-home";
 import HeaderTitle from "../../header/header-title";
+import {DB} from "../../features/firebase";
 
 
 export default class Students extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {courses: false};
+    }
+
+    componentDidMount() {
+        this.DB = DB("teacher.groups", ({data}) => {
+            const groups = data.reduce((s, {_id, name}) => ({...s, [_id]: name}), {});
+            this.setState({groups});
+        });
+        this.DB.load();
+    }
+
+    componentWillUnmount() {
+        this.DB.close()
+    }
     render() {
+        if (!this.state.groups) return false;
+
         return (
             <FlexBox>
                 <Header>
@@ -18,12 +37,13 @@ export default class Students extends React.Component {
                 </Header>
                 <DBVirtualList
                     single={false}
-                    dbPath="teacher.students"
+                    dbpath="teacher.students"
                     fields={[
                         {id: "photo", title: "Фотография", type: "image"},
                         {id: "firstname", title: "Имя", type: "text"},
                         {id: "lastname", title: "Фамилия", type: "text"},
                         {id: "patronymic", title: "Отчество", type: "text"},
+                        {id: "groups", title: "Группа", type: "dbautocomplete", dbpath: "teacher.groups", dblabel: "name"},
                     ]}
                     template={(item, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
@@ -32,6 +52,7 @@ export default class Students extends React.Component {
                                 <ListItem>Имя: {item.firstname}</ListItem>
                                 <ListItem>Фамилия: {item.lastname}</ListItem>
                                 <ListItem>Отчество: {item.patronymic}</ListItem>
+                                <ListItem>Группа: {this.state.groups[item.groups]}</ListItem>
                             </List>
                         </ListItem>
                     )}

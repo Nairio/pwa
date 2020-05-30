@@ -30,7 +30,7 @@ import Experience from "./modules/pages/teacher/experience";
 import Achievements from "./modules/pages/teacher/achievements";
 import Courses from "./modules/pages/teacher/courses";
 import Groups from "./modules/pages/teacher/groups";
-import Students from "./modules/pages/students/students";
+import Students from "./modules/pages/teacher/students";
 import Calendar from "./modules/pages/calendar/calendar";
 import Chat from "./modules/pages/chat/chat";
 import Reports from "./modules/pages/reports/reports";

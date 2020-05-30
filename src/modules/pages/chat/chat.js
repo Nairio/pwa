@@ -9,7 +9,7 @@ export default class Chat extends React.Component {
         return (
             <DBVirtualList
                 single={false}
-                dbPath="teacher.chat"
+                dbpath="teacher.chat"
                 fields={[
                     {id: "photo", title: "Фотография", type: "image"},
                     {id: "firstname", title: "Имя", type: "text"},

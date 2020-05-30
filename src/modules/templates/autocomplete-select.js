@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import {DB} from "../features/firebase";
 
 
-export default function AutocompleteSelect({defaultValue, name, dbPath, dblabel, ...props}) {
+export default function AutocompleteSelect({defaultValue, name, dbpath, dblabel, ...props}) {
     const [item, setItem] = React.useState({[dblabel]: "", _id: ""});
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
@@ -13,12 +13,12 @@ export default function AutocompleteSelect({defaultValue, name, dbPath, dblabel,
 
     React.useEffect(() => {
         let active = true;
-        DB(dbPath, ({data}) => {
+        DB(dbpath, ({data}) => {
             (d => d.length > 0 && setItem(d[0]))(data.filter(d => d._id === defaultValue));
             active && setOptions(data)
         }).load();
         return () => {active = false};
-    }, [dbPath, defaultValue, loading]);
+    }, [dbpath, defaultValue, loading]);
 
    // React.useEffect(() => {!open && setOptions([])}, [open]);
 

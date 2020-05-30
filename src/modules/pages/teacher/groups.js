@@ -6,10 +6,30 @@ import {FlexBox} from "../../templates/flex";
 import Header from "../../header/header";
 import GoHome from "../../header/go-home";
 import HeaderTitle from "../../header/header-title";
+import {DB} from "../../features/firebase";
 
 
 export default class Groups extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {courses: false};
+    }
+
+    componentDidMount() {
+        this.DB = DB("teacher.courses", ({data}) => {
+            const courses = data.reduce((s, {_id, name}) => ({...s, [_id]: name}), {});
+            this.setState({courses});
+        });
+        this.DB.load();
+    }
+
+    componentWillUnmount() {
+        this.DB.close()
+    }
+
     render() {
+        if (!this.state.courses) return false;
+
         return (
             <FlexBox>
                 <Header>
@@ -18,18 +38,19 @@ export default class Groups extends React.Component {
                 </Header>
                 <DBVirtualList
                     single={false}
-                    dbPath="teacher.groups"
+                    dbpath="teacher.groups"
                     fields={[
                         {id: "name", title: "Название", type: "text"},
                         {id: "address", title: "Адрес", type: "text"},
-                        {id: "age_from", title: "Возраст от", type: "text"},
-                        {id: "age_to", title: "Возраст до", type: "text"},
-                        {id: "count", title: "Количество человек", type: "text"},
-                        {id: "course", title: "Курс", type: "dbautocomplete", dbpath: "teacher.courses", dblabel: "name"},
+                        {id: "courses", title: "Курс", type: "dbautocomplete", dbpath: "teacher.courses", dblabel: "name"},
                     ]}
-                    template={({name, address, age_from, age_to, count, duration}, onEdit) => (
+                    template={({name, address, count, duration, courses}, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
-                            {`${name}, ${address}, ${age_from}, ${age_to}, ${count}, ${duration}`}
+                            <div>
+                                <p>Название: {name}</p>
+                                <p>Адрес: {address}</p>
+                                <p>Курс: {this.state.courses[courses]}</p>
+                            </div>
                         </ListItem>
                     )}
                 />
