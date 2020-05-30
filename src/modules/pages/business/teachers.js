@@ -24,7 +24,7 @@ export default class Teachers extends React.Component {
                         {id: "lastname", title: "Фамилия", type: "text"},
                         {id: "firstname", title: "Имя", type: "text"},
                         {id: "patronymic", title: "Отчество", type: "text"},
-                        {id: "sex", title: "Пол", type: "select", options: ["М", "Ж"]},
+                        {id: "sex", title: "Пол", type: "select", options: [{label: "Мужской", value: "m"}, {label: "Женский", value: "w"}]},
                         {id: "birthday", title: "День рождения", type: "date"},
                         {id: "email", title: "Email", type: "text"},
                         {id: "level", title: "Профессиональный уровень", type: "number"},
