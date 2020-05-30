@@ -31,7 +31,7 @@ export class Form extends React.Component{
                         {type === "image" && <LoadableImage src={value} name={id} title={title}/>}
                         {type === "doc" && <LoadableDoc src={value} name={id} title={title}/>}
                         {type === "text" && <TextField name={id} label={title} type="text" fullWidth defaultValue={value} autoComplete="off" autoFocus={autoFocus}/>}
-                        {type === "select" && <TextField name={id} label={title} type="text" fullWidth defaultValue={value} autoComplete="off" select>{options.map(({label, value}) => <MenuItem key={value} value={value}>{label}</MenuItem>)}</TextField>}
+                        {type === "select" && <TextField style={{textAlign: "left"}} name={id} label={title} type="text" fullWidth defaultValue={value} autoComplete="off" select>{options.map(({label, value}) => <MenuItem key={value} value={value}>{label}</MenuItem>)}</TextField>}
                         {type === "number" && <TextField name={id} label={title} type="number" fullWidth defaultValue={value} autoComplete="off" autoFocus={autoFocus}/>}
                         {type === "date" && <TextField name={id} label={title} type="date" fullWidth defaultValue={value} autoComplete="off" InputLabelProps={{shrink: true}}/>}
                         {type === "time" && <TextField name={id} label={title} type="time" fullWidth defaultValue={value} autoComplete="off" InputLabelProps={{shrink: true}}/>}
