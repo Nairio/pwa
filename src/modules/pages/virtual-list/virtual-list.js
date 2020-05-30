@@ -28,6 +28,7 @@ export default class VirtualListPage extends React.Component {
                             {id: "_sort", title: "Сортировка", type: "disabled"},
                             {id: "img", title: "Иконка", type: "image"},
                             {id: "title", title: "Название", type: "text"},
+                            {id: "age", title: "Возраст", type: "number"},
                             {id: "text", title: "Текст", type: "dbautocomplete", dbpath: "data", dblabel: "title"},
                         ]}
                         createButton={(onCreate) => (

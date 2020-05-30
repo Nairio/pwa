@@ -11,7 +11,7 @@ export const Field = () => false;
 Field.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(["hidden", "disabled", "image", "text", "date", "time", "dbautocomplete"]).isRequired,
+    type: PropTypes.oneOf(["hidden", "disabled", "image", "text", "number", "date", "time", "dbautocomplete"]).isRequired,
 };
 
 
@@ -28,6 +28,7 @@ export class Form extends React.Component{
                         {type === "disabled" && <TextField disabled autoComplete="off" fullWidth name={id} label={title} defaultValue={value}/>}
                         {type === "image" && <LoadableImage src={value} name={id} title={title}/>}
                         {type === "text" && <TextField name={id} label={title} type="text" fullWidth defaultValue={value} autoComplete="off" autoFocus={autoFocus}/>}
+                        {type === "number" && <TextField name={id} label={title} type="number" fullWidth defaultValue={value} autoComplete="off" autoFocus={autoFocus}/>}
                         {type === "date" && <TextField name={id} label={title} type="date" fullWidth defaultValue={value} autoComplete="off" InputLabelProps={{shrink: true}}/>}
                         {type === "time" && <TextField name={id} label={title} type="time" fullWidth defaultValue={value} autoComplete="off" InputLabelProps={{shrink: true}}/>}
                         {type === "dbautocomplete" && <AutocompleteSelect dbpath={dbpath} dblabel={dblabel} name={id} label={title} fullWidth defaultValue={value} autoComplete="off"/>}
