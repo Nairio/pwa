@@ -2,7 +2,6 @@ import React from "react";
 import {FlexBox} from "./flex";
 import {FBStorage} from "../features/firebase";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import FullScreen from "./fullscreen";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -50,7 +49,9 @@ export class LoadableDoc extends React.Component {
                 </FullScreen>
                 <Grid container spacing={2} alignItems="flex-end">
                     <Grid item xs>
-                        <TextField type={"hidden"}  autoComplete="off" fullWidth name={this.props.name} label={this.props.title} value={url} onChange={e => this.setState({url: e.target.value})}/>
+                        {this.props.title}
+                        <input type={"hidden"}  autoComplete="off" name={this.props.name} value={url} onChange={e => this.setState({url: e.target.value})}/>
+                        <hr/>
                     </Grid>
                     <Grid item>
                         <IconButton title="Upload" color="secondary" onClick={this.onFile}>
