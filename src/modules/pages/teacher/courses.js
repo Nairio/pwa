@@ -42,7 +42,7 @@ export default class Courses extends React.Component {
                     fields={[
                         {id: "name", title: "Название", type: "text"},
                         {id: "description", title: "Описание", type: "text"},
-                        {id: "program", title: "Программа", type: "text"},
+                        {id: "program", title: "Программа", type: "doc"},
                         {id: "duration", title: "Продолжительность, ак. часов", type: "number"},
                         {id: "level", title: "Уровень", type: "text"},
                         {id: "age_from", title: "Возраст от", type: "number"},
