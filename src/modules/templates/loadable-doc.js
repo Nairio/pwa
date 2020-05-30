@@ -1,12 +1,12 @@
 import React from "react";
-import ImageIcon from '@material-ui/icons/Image';
 import {FlexBox} from "./flex";
 import {FBStorage} from "../features/firebase";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import IconButton from "@material-ui/core/IconButton";
 import FullScreen from "./fullscreen";
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 export class LoadableDoc extends React.Component {
     constructor(props, context) {
@@ -19,7 +19,6 @@ export class LoadableDoc extends React.Component {
     onFile() {
         ((el) => {
             el.type = "file";
-            el.accept = "application/*";
             el.onchange = (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -51,18 +50,18 @@ export class LoadableDoc extends React.Component {
                 </FullScreen>
                 <Grid container spacing={2} alignItems="flex-end">
                     <Grid item xs>
-                        <TextField  autoComplete="off" fullWidth name={this.props.name} label={this.props.title} value={url} onChange={e => this.setState({url: e.target.value})}/>
+                        <TextField type={"hidden"}  autoComplete="off" fullWidth name={this.props.name} label={this.props.title} value={url} onChange={e => this.setState({url: e.target.value})}/>
                     </Grid>
                     <Grid item>
-                        <IconButton color="secondary" onClick={this.onFile}>
-                            <ImageSearchIcon/>
+                        <IconButton title="Upload" color="secondary" onClick={this.onFile}>
+                            <CloudUploadIcon/>
                         </IconButton>
                     </Grid>
                     <Grid item style={{alignItems: "center", justifyContent: "center", display: "flex", padding: 0, margin: 8, height: 43, width: 43}}>
                         {isError && <span>ERROR</span>}
                         {isProgress && <span>{progress}%</span>}
-                        {isImage && <div onClick={() => this.setState({zoom: true})} style={{width: "100%", height: "100%", borderRadius: "50%", backgroundPosition: "50% 50%", backgroundSize: "cover", backgroundImage: `url(${url})`}}/>}
-                        {isNoImage && <ImageIcon/>}
+                        {isImage && <a title="Download" target="_blank" rel="noopener noreferrer" href={url} download><CloudDownloadIcon/></a>}
+                        {isNoImage && <CloudUploadIcon/>}
                     </Grid>
                 </Grid>
             </FlexBox>
