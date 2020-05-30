@@ -8,7 +8,7 @@ import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import IconButton from "@material-ui/core/IconButton";
 import FullScreen from "./fullscreen";
 
-export class LoadableImage extends React.Component {
+export class LoadableDoc extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {url: this.props.src || "", progress: -1, error: false, zoom: false};
@@ -19,7 +19,7 @@ export class LoadableImage extends React.Component {
     onFile() {
         ((el) => {
             el.type = "file";
-            el.accept = "image/*";
+            el.accept = "application/*";
             el.onchange = (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -29,12 +29,6 @@ export class LoadableImage extends React.Component {
                     (url) => this.setState({url, progress: -1}),
                 );
                 el.remove();
-            /*
-                const reader = new FileReader();
-                reader.onloadend = () => {};
-                reader.readAsDataURL(file);
-            */
-
             };
             el.click();
         })(document.body.appendChild(document.createElement("input")))
@@ -47,7 +41,6 @@ export class LoadableImage extends React.Component {
         const isProgress = !isError && progress > -1 && progress < 101;
         const isImage = !isProgress && url;
         const isNoImage = !isProgress && !url;
-
 
         return (
             <FlexBox middle center>
