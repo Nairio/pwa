@@ -79,7 +79,7 @@ export default class DBVirtualList extends React.Component {
                     <FlexScroll>
                         <FlexBox middle center>
                             <Form item={item} onSubmit={item => this.onClose(isAdd ? this.DB.add(item) : this.DB.change(item))}>
-                                {fields.map(({id, type, title, dbpath, dblabel}) => <Field key={id} id={id} type={type} title={title} dbpath={dbpath} dblabel={dblabel}/>)}
+                                {fields.map(({id, type, title, dbpath, dblabel, options}) => <Field key={id} id={id} type={type} title={title} dbpath={dbpath} dblabel={dblabel} options={options}/>)}
                             </Form>
                         </FlexBox>
                     </FlexScroll>
