@@ -9,7 +9,7 @@ import {FlexBox} from "../../templates/flex";
 import {DB} from "../../features/firebase";
 
 
-export default class Courses extends React.Component {
+export default class History extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {courses: false};

@@ -42,6 +42,10 @@ import Subjects from "./modules/pages/business/subjects";
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import Teachers from "./modules/pages/business/teachers";
 import Levels from "./modules/pages/business/levels";
+import Parents from "./modules/pages/business/parents";
+import ChildCareIcon from '@material-ui/icons/ChildCare';
+import HistoryIcon from '@material-ui/icons/History';
+import History from "./modules/pages/business/history";
 
 class App extends React.Component {
     constructor(props, context) {
@@ -88,15 +92,18 @@ class App extends React.Component {
                 </Page>
                 <Divider/>
 
-                <Page disabled={!email} title="Уровни" icon={<MonetizationOnIcon/>} path="/levels/" component={Levels}/>
                 <Page disabled={!email} title="Места" icon={<AccountBalanceIcon/>} path="/places/" component={Places}/>
                 <Page disabled={!email} title="Предметы" icon={<CategoryIcon/>} path="/subjects/" component={Subjects}/>
                 <Page disabled={!email} title="Курсы" icon={<DvrIcon/>} path="/courses/" component={Courses}/>
                 <Page disabled={!email} title="Группы" icon={<GroupIcon/>} path="/groups/" component={Groups}/>
                 <Page disabled={!email} title="Преподаватели" icon={<HowToRegIcon/>} path="/teachers/" component={Teachers}/>
 
-                <Page disabled={!email} title="Студенты" icon={<AccessibilityNewIcon/>} path="/students/" component={Students}/>
+                <Page disabled={!email} title="Родители" icon={<AccessibilityNewIcon/>} path="/parents/" component={Parents}/>
+                <Page disabled={!email} title="Студенты" icon={<ChildCareIcon/>} path="/students/" component={Students}/>
+                <Page disabled={!email} title="История" icon={<HistoryIcon/>} path="/history/" component={History}/>
+
                 <Divider/>
+                <Page disabled={!email} title="Уровни" icon={<MonetizationOnIcon/>} path="/levels/" component={Levels}/>
 
                 <Page disabled={!email} title="Календарь" icon={<DateRangeIcon/>} path="/calendar/" component={Calendar}/>
                 <Page disabled={!email} title="Чат" icon={<ChatIcon/>} path="/chat/" component={Chat}/>

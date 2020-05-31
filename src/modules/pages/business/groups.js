@@ -23,7 +23,7 @@ export default class Groups extends React.Component {
         this.DB.load();
 
         this.DB2 = DB("places", ({data}) => {
-            const places = data.reduce((s, {_id, name}) => ({...s, [_id]: name}), {});
+            const places = data.reduce((s, {_id, ...item}) => ({...s, [_id]: item}), {});
             this.setState({places});
         });
         this.DB2.load();
@@ -58,8 +58,9 @@ export default class Groups extends React.Component {
                     fields={[
                         {id: "name", title: "Название", type: "text"},
                         {id: "courses", title: "Курс", type: "dbautocomplete", dbpath: "courses", dblabel: "name"},
-                        {id: "places", title: "Место", type: "dbautocomplete", dbpath: "places", dblabel: "name"},
-                        {id: "teachers", title: "Преподаватель", type: "dbautocomplete", dbpath: "teachers", dblabel: "firstname"},
+                        {id: "places", title: "Место", type: "dbautocomplete", dbpath: "places", dblabel: ({name, address}) => `${name} (${address})`},
+                        {id: "teachers", title: "Преподаватель", type: "dbautocomplete", dbpath: "teachers", dblabel: ({firstname, lastname, patronymic}) => `${lastname} ${firstname} ${patronymic}`},
+                        {id: "max_student_count", title: "Максимум студентов", type: "number"},
 
                         {id: "monday", title: "Понедельник", type: "time"},
                         {id: "tuesday", title: "Вторник", type: "time"},
@@ -72,10 +73,12 @@ export default class Groups extends React.Component {
                     template={(item, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
                             <div>
+                                <h3>{item.name}</h3>
                                 <p>Курс: {this.state.courses[item.courses]}</p>
-                                <p>Название: {item.name}</p>
-                                <p>Адрес: {this.state.places[item.places]}</p>
+                                <p>Место: {(({name, address}) => `${name} (${address})`)(this.state.places[item.places])}</p>
                                 <p>Преподаватель: {(({firstname, lastname, patronymic})=>`${lastname} ${firstname} ${patronymic}`)(this.state.teachers[item.teachers])}</p>
+                                <p>Максимум студентов: {item.max_student_count || 0}</p>
+
                                 {item.monday && <p>Понедельник: {item.monday}</p>}
                                 {item.tuesday && <p>Вторник: {item.tuesday}</p>}
                                 {item.wednesday && <p>Среда: {item.wednesday}</p>}
