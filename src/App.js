@@ -24,28 +24,28 @@ import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import Contacts from "./modules/pages/business/contacts";
-import Diploms from "./modules/pages/business/diploms";
-import Experience from "./modules/pages/business/experience";
-import Achievements from "./modules/pages/business/achievements";
-import Courses from "./modules/pages/business/courses";
-import Groups from "./modules/pages/business/groups";
-import Students from "./modules/pages/business/students";
+import Contacts from "./modules/pages/parents/contacts";
+import Diploms from "./modules/pages/parents/diploms";
+import Experience from "./modules/pages/parents/experience";
+import Achievements from "./modules/pages/parents/achievements";
+import Courses from "./modules/pages/parents/courses";
+import Groups from "./modules/pages/parents/groups";
+import Students from "./modules/pages/parents/students";
 import Calendar from "./modules/pages/calendar/calendar";
 import Chat from "./modules/pages/chat/chat";
 import Reports from "./modules/pages/reports/reports";
-import Hslide from "./modules/pages/business/hslide";
-import Places from "./modules/pages/business/places";
+import Hslide from "./modules/pages/parents/hslide";
+import Places from "./modules/pages/parents/places";
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import CategoryIcon from '@material-ui/icons/Category';
-import Subjects from "./modules/pages/business/subjects";
+import Subjects from "./modules/pages/parents/subjects";
 import HowToRegIcon from '@material-ui/icons/HowToReg';
-import Teachers from "./modules/pages/business/teachers";
-import Levels from "./modules/pages/business/levels";
-import Parents from "./modules/pages/business/parents";
+import Teachers from "./modules/pages/parents/teachers";
+import Levels from "./modules/pages/parents/levels";
+import Parents from "./modules/pages/parents/parents";
 import ChildCareIcon from '@material-ui/icons/ChildCare';
 import HistoryIcon from '@material-ui/icons/History';
-import History from "./modules/pages/business/history";
+import History from "./modules/pages/parents/history";
 
 class App extends React.Component {
     constructor(props, context) {
@@ -63,7 +63,7 @@ class App extends React.Component {
         const {name, email} = this.state;
 
         return (
-            <PWA appId="pwa" title="Future Simple School" subtitle="Business">
+            <PWA appId="pwa" title="Future Simple School" subtitle="Parents">
                 <Page title="Главная" path="/" component={Index}/>
 
                 <Page disabled={email} title={"Вход"} icon={<LockOpenIcon/>} path="/account/" onChange={this.onAccountChange} component={Account}>
