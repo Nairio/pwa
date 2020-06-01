@@ -39,19 +39,7 @@ export default class Courses extends React.Component {
                 <DBVirtualList
                     single={false}
                     dbpath="courses"
-                    fields={[
-                        {id: "subjects", title: "Предмет", type: "dbautocomplete", dbpath: "subjects", dblabel: "name"},
-                        {id: "name", title: "Название", type: "text"},
-                        {id: "description", title: "Описание", type: "text"},
-                        {id: "program", title: "Программа", type: "doc"},
-                        {id: "level", title: "Уровень", type: "text"},
-
-                        {id: "age_from", title: "Возраст от", type: "number"},
-                        {id: "age_to", title: "Возраст до", type: "number"},
-                        {id: "duration", title: "Продолжительность, ак. часов", type: "number"},
-                        {id: "count_in_group", title: "Количество в группе", type: "number"},
-                        {id: "cost", title: "Стоимость за ак. час, ₽", type: "number"},
-                    ]}
+                    fields={false}
                     template={({name, description, subjects, program, level, cost, duration, age_from, age_to, count_in_group, _id}, onEdit) => (
                         <ListItem button alignItems="flex-start" onClick={onEdit}>
                             <div>

@@ -68,12 +68,12 @@ class App extends React.Component {
 
                 <Divider/>
 
-                <Page disabled={!email} title="Контакты" icon={<AccountBoxIcon/>} path="/contacts/" component={Hslide}>
+                <Page disabled={!email} title="Родители" icon={<AccountBoxIcon/>} path="/contacts/" component={Hslide}>
                     <SwipeableBottom>
                         <Page title="Контакты" icon={<AccountBoxIcon/>} component={Contacts}/>
                     </SwipeableBottom>
                 </Page>
-                <Page disabled={!email} title="Студенты" icon={<ChildCareIcon/>} path="/students/" component={Students}/>
+                <Page disabled={!email} title="Дети" icon={<ChildCareIcon/>} path="/students/" component={Students}/>
 
                 <Divider/>
                 <Page disabled={!email} title="Курсы" icon={<DvrIcon/>} path="/courses/" component={Courses}/>

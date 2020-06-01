@@ -7,13 +7,28 @@ export default class Contacts extends React.Component {
      render() {
         return (
             <DBVirtualList
-                single={true}
+                single={false}
                 dbpath="teacher.contacts"
                 fields={[
                     {id: "photo", title: "Фотография", type: "image"},
                     {id: "firstname", title: "Имя", type: "text"},
                     {id: "lastname", title: "Фамилия", type: "text"},
                     {id: "patronymic", title: "Отчество", type: "text"},
+                    {
+                        id: "role", title: "Роль", type: "select", options: [
+                            {label: "Мама", value: "Мама"},
+                            {label: "Папа", value: "Папа"},
+                            {label: "Няня / опекун", value: "Няня / опекун"},
+                            {label: "Бабушка", value: "Бабушка"},
+                            {label: "Дедушка", value: "Дедушка"},
+                            {label: "Брат", value: "Брат"},
+                            {label: "Сестра", value: "Сестра"},
+                            {label: "Тётя", value: "Тётя"},
+                            {label: "Дядя", value: "Дядя"},
+                        ]
+                    },
+                    {id: "phone", title: "Телефон", type: "text"},
+                    {id: "address", title: "Адрес проживания", type: "text"},
                 ]}
                 template={(item, onEdit) => (
                     <ListItem button alignItems="flex-start" onClick={onEdit}>
@@ -22,6 +37,9 @@ export default class Contacts extends React.Component {
                             <ListItem>Имя: {item.firstname}</ListItem>
                             <ListItem>Фамилия: {item.lastname}</ListItem>
                             <ListItem>Отчество: {item.patronymic}</ListItem>
+                            <ListItem>Роль: {item.role}</ListItem>
+                            <ListItem>Телефон: {item.phone}</ListItem>
+                            <ListItem>Адрес проживания: {item.address}</ListItem>
                         </List>
                     </ListItem>
                 )}
