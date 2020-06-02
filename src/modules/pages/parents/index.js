@@ -3,6 +3,12 @@ import {FlexBox, FlexScroll} from "../../templates/flex";
 import Menu from "../../menu/menu";
 import HeaderTitle from "../../header/header-title";
 import Header from "../../header/header";
+import {Calendar, momentLocalizer} from 'react-big-calendar'
+import moment from 'moment';
+
+
+const localizer = momentLocalizer(moment)
+
 
 export default class Index extends React.Component {
     render() {
@@ -13,9 +19,13 @@ export default class Index extends React.Component {
                     <HeaderTitle>{this.props.title}</HeaderTitle>
                 </Header>
                 <FlexScroll>
-                    <FlexBox center middle>
-                        <h1>{this.props.title}</h1>
-                    </FlexBox>
+                    <Calendar
+                        localizer={localizer}
+                        events={myEventsList}
+                        startAccessor="start"
+                        endAccessor="end"
+                        style={{ height: 500 }}
+                    />
                 </FlexScroll>
             </FlexBox>
         )

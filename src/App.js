@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Index from "./modules/pages/index";
+import Index from "./modules/pages/parents";
 
 import Divider from "@material-ui/core/Divider";
 import {SwipeableBottom, SwipeableTop} from "./modules/templates/swipeable";
