@@ -10,10 +10,6 @@ export default class Contacts extends React.Component {
                 single={false}
                 dbpath="teacher.contacts"
                 fields={[
-                    {id: "photo", title: "Фотография", type: "image"},
-                    {id: "firstname", title: "Имя", type: "text"},
-                    {id: "lastname", title: "Фамилия", type: "text"},
-                    {id: "patronymic", title: "Отчество", type: "text"},
                     {
                         id: "role", title: "Роль", type: "select", options: [
                             {label: "Мама", value: "Мама"},
@@ -27,20 +23,19 @@ export default class Contacts extends React.Component {
                             {label: "Дядя", value: "Дядя"},
                         ]
                     },
+                    {id: "photo", title: "Фотография", type: "image"},
+                    {id: "firstname", title: "Имя", type: "text"},
+                    {id: "lastname", title: "Фамилия", type: "text"},
+                    {id: "patronymic", title: "Отчество", type: "text"},
                     {id: "phone", title: "Телефон", type: "text"},
                     {id: "address", title: "Адрес проживания", type: "text"},
                 ]}
                 template={(item, onEdit) => (
                     <ListItem button alignItems="flex-start" onClick={onEdit}>
                         {item.photo && <ListItemAvatar><Avatar src={item.photo}/></ListItemAvatar>}
-                        <List>
-                            <ListItem>Имя: {item.firstname}</ListItem>
-                            <ListItem>Фамилия: {item.lastname}</ListItem>
-                            <ListItem>Отчество: {item.patronymic}</ListItem>
-                            <ListItem>Роль: {item.role}</ListItem>
-                            <ListItem>Телефон: {item.phone}</ListItem>
-                            <ListItem>Адрес проживания: {item.address}</ListItem>
-                        </List>
+                        <div>
+                            <p>{item.role}: {item.lastname} {item.firstname} {item.patronymic} ({item.phone}, {item.address})</p>
+                        </div>
                     </ListItem>
                 )}
             />

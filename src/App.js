@@ -29,7 +29,7 @@ import Hslide from "./modules/pages/parents/hslide";
 import ChildCareIcon from '@material-ui/icons/ChildCare';
 import HistoryIcon from '@material-ui/icons/History';
 import History from "./modules/pages/parents/history";
-
+import CastForEducationIcon from '@material-ui/icons/CastForEducation';
 class App extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -66,7 +66,7 @@ class App extends React.Component {
 
                 <Divider/>
 
-                <Page disabled={!email} title="Родители" icon={<AccountBoxIcon/>} path="/contacts/" component={Hslide}>
+                <Page disabled={!email} title="Контакты" icon={<AccountBoxIcon/>} path="/contacts/" component={Hslide}>
                     <SwipeableBottom>
                         <Page title="Контакты" icon={<AccountBoxIcon/>} component={Contacts}/>
                     </SwipeableBottom>
@@ -74,14 +74,11 @@ class App extends React.Component {
                 <Page disabled={!email} title="Дети" icon={<ChildCareIcon/>} path="/students/" component={Students}/>
 
                 <Divider/>
-                <Page disabled={!email} title="Курсы" icon={<DvrIcon/>} path="/courses/" component={Courses}/>
-                <Page disabled={!email} title="История" icon={<HistoryIcon/>} path="/history/" component={History}/>
-
+                <Page disabled={!email} title="Уроки" icon={<DateRangeIcon/>} path="/lessons/" component={Courses}/>
                 <Divider/>
-                <Page disabled={!email} title="Календарь" icon={<DateRangeIcon/>} path="/calendar/" component={Calendar}/>
                 <Page disabled={!email} title="Чат" icon={<ChatIcon/>} path="/chat/" component={Chat}/>
                 <Divider/>
-                <Page disabled={!email} title="Отчёты" icon={<MonetizationOnIcon/>} path="/reports/" component={Reports}/>
+                <Page disabled={!email} title="Платежи" icon={<MonetizationOnIcon/>} path="pay/" component={Reports}/>
             </PWA>
         )
     }
