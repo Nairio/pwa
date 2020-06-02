@@ -16,20 +16,15 @@ import Forgot from "./modules/pages/account/forgot";
 import ChatIcon from '@material-ui/icons/Chat';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import DvrIcon from '@material-ui/icons/Dvr';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Contacts from "./modules/pages/parents/contacts";
 import Courses from "./modules/pages/parents/courses";
 import Students from "./modules/pages/parents/students";
-import Calendar from "./modules/pages/calendar/calendar";
 import Chat from "./modules/pages/chat/chat";
 import Reports from "./modules/pages/reports/reports";
 import Hslide from "./modules/pages/parents/hslide";
 import ChildCareIcon from '@material-ui/icons/ChildCare';
-import HistoryIcon from '@material-ui/icons/History';
-import History from "./modules/pages/parents/history";
-import CastForEducationIcon from '@material-ui/icons/CastForEducation';
 class App extends React.Component {
     constructor(props, context) {
         super(props, context);
