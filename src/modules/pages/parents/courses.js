@@ -2,17 +2,16 @@ import React from 'react';
 import {ListItem} from "@material-ui/core";
 
 import DBVirtualList from "../../templates/db-virtual-list";
-import Header from "../../header/header";
-import GoHome from "../../header/go-home";
-import HeaderTitle from "../../header/header-title";
-import {FlexBox} from "../../templates/flex";
 import {DB} from "../../features/firebase";
+import FullScreen from "../../templates/fullscreen";
+import Button from "@material-ui/core/Button";
 
 
 export default class Courses extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {courses: false};
+        this.onEdit = ()=>alert();
     }
 
     componentDidMount() {
@@ -21,30 +20,40 @@ export default class Courses extends React.Component {
             this.setState({subjects});
         });
         this.DB.load();
+
+        this.DB2 = DB("students-courses", ({data}) => {
+            const studentsCourses = data.reduce((s, {student_id, course_id}) => ({...s, [student_id + "-" + course_id]: true}), {});
+            this.setState({studentsCourses});
+        });
+        this.DB2.load();
     }
 
     componentWillUnmount() {
-        this.DB.close()
+        this.DB.close();
+        this.DB2.close()
     }
 
     render() {
-        if (!this.state.subjects) return false;
+        const {subjects, studentsCourses} = this.state;
+
+        if (!subjects) return false;
+
+
+        console.log({studentsCourses}, this.onEdit);
+
+        this.onEdit();
 
         return (
-            <FlexBox>
-                <Header>
-                    <GoHome/>
-                    <HeaderTitle align="left">{this.props.title}</HeaderTitle>
-                </Header>
+            <FullScreen open={this.props.open} title={"Курсы"} onClose={this.props.onClose}>
                 <DBVirtualList
                     single={false}
                     dbpath="courses"
                     fields={false}
-                    template={({name, description, subjects, program, level, cost, duration, age_from, age_to, count_in_group, _id}, onEdit) => (
-                        <ListItem button alignItems="flex-start" onClick={onEdit}>
+                    template={({name, description, subjects, program, level, cost, duration, age_from, age_to, _id}, onEdit) => (
+                        <ListItem button alignItems="flex-start">
                             <div>
                                 <h3>{name}</h3>
-                                <p>Предмет: {this.state.subjects[subjects]}</p>
+                                <p>Предмет: {subjects[subjects]}</p>
                                 <p>{description}</p>
                                 <p>Уровень: {level}</p>
                                 <p>Возраст: {age_from}-{age_to}</p>
@@ -53,10 +62,23 @@ export default class Courses extends React.Component {
                                 {program && <p><a onClick={e=>e.stopPropagation()} href={program} rel="noopener noreferrer" target="_blank">Программа</a></p>}
                                 {!program && <p>Программа</p>}
                             </div>
+                            {(console.log(studentsCourses, this.props._id, _id, studentsCourses[this.props._id + "-" + _id]) || 1) && (this.onEdit=onEdit) && studentsCourses[this.props._id + "-" + _id] ?
+                                (
+                                    <b>Подключено</b>
+                                )
+                                    :
+                                (
+                                    <Button
+                                        variant={"contained"}
+                                        color={"secondary"}
+                                        onClick={(e) => e.preventDefault() || e.stopPropagation() || this.DB2.add({student_id: this.props._id, course_id: _id})}
+                                    >Подать заявку</Button>
+                                )
+                            }
                         </ListItem>
                     )}
                 />
-            </FlexBox>
+            </FullScreen>
         )
     }
 }

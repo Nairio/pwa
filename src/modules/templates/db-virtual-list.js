@@ -92,7 +92,7 @@ export default class DBVirtualList extends React.Component {
                     index={index}
                     modified={modified}
                     divider="inset"
-                    template={(item) => template(item, () => fields && this.onEdit(item))}
+                    template={(item) => template(item, () => fields ? this.onEdit(item) : this.DB.change({...item, _updated: new Date()}))}
                 />
             </FlexBox>
         )
