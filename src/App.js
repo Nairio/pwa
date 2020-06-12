@@ -69,7 +69,7 @@ class App extends React.Component {
                 <Page disabled={!email} title="Дети" icon={<ChildCareIcon/>} path="/students/" component={Students}/>
 
                 <Divider/>
-                <Page disabled={!email} title="Уроки" icon={<DateRangeIcon/>} path="/lessons/" component={Courses}/>
+                <Page disabled={!email} title="Уроки" icon={<DateRangeIcon/>} path="/courses/" component={Courses}/>
                 <Divider/>
                 <Page disabled={!email} title="Чат" icon={<ChatIcon/>} path="/chat/" component={Chat}/>
                 <Divider/>

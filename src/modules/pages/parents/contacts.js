@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar, ListItem, ListItemAvatar, List} from "@material-ui/core";
+import {Avatar, ListItem, ListItemAvatar} from "@material-ui/core";
 
 import DBVirtualList from "../../templates/db-virtual-list";
 

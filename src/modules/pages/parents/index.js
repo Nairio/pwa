@@ -16,7 +16,7 @@ const StaticDatePicker = () => {
         <MuiPickersUtilsProvider  locale={ruLocale} utils={DateFnsUtils}>
             <DatePicker
                 autoOk
-                orientation="landscape"
+                orientation=""
                 variant="static"
                 openTo="date"
                 value={date}
@@ -36,8 +36,7 @@ export default class Index extends React.Component {
                     <HeaderTitle>{this.props.title}</HeaderTitle>
                 </Header>
                 <FlexScroll>
-                    <FlexBox center middle>
-                        <h1>{this.props.title}</h1>
+                    <FlexBox center top>
                         <StaticDatePicker/>
                     </FlexBox>
                 </FlexScroll>

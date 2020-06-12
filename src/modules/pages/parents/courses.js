@@ -67,7 +67,7 @@ export default class Courses extends React.Component {
         if (!this.state.subjects) return false;
 
         return (
-            <FullScreen open={this.props.open} title={"Курсы"} onClose={this.props.onClose}>
+            <FullScreen open={!!this.props.open} title={"Курсы"} onClose={this.props.onClose}>
                 <FlexBox style={{overflow: "hidden"}}>
                     <DBVirtualList
                         single={false}
