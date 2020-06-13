@@ -1,32 +1,39 @@
 import React from 'react';
-import {Avatar, ListItem, ListItemAvatar, List} from "@material-ui/core";
+import {FlexBox} from "../../templates/flex";
+import Menu from "../../menu/menu";
+import HeaderTitle from "../../header/header-title";
+import Header from "../../header/header";
 
-import DBVirtualList from "../../templates/db-virtual-list";
+import 'dhtmlx-scheduler';
+import 'dhtmlx-scheduler/codebase/dhtmlxscheduler_material.css';
+import "dhtmlx-scheduler/codebase/locale/locale_ru"
+
+const scheduler = window.scheduler;
+
 
 
 export default class Calendar extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.schedulerContainer = React.createRef();
+    }
+
+    componentDidMount() {
+        scheduler.init(this.schedulerContainer.current);
+        window.onresize = () => scheduler.render()
+    }
+
     render() {
         return (
-            <DBVirtualList
-                single={false}
-                dbpath="teacher.calendar"
-                fields={[
-                    {id: "photo", title: "Фотография", type: "image"},
-                    {id: "firstname", title: "Имя", type: "text"},
-                    {id: "lastname", title: "Фамилия", type: "text"},
-                    {id: "patronymic", title: "Отчество", type: "text"},
-                ]}
-                template={(item, onEdit) => (
-                    <ListItem button alignItems="flex-start" onClick={onEdit}>
-                        {item.photo && <ListItemAvatar><Avatar src={item.photo}/></ListItemAvatar>}
-                        <List>
-                            <ListItem>Имя: {item.firstname}</ListItem>
-                            <ListItem>Фамилия: {item.lastname}</ListItem>
-                            <ListItem>Отчество: {item.patronymic}</ListItem>
-                        </List>
-                    </ListItem>
-                )}
-            />
+            <FlexBox>
+                <Header>
+                    <Menu/>
+                    <HeaderTitle>{this.props.title}</HeaderTitle>
+                </Header>
+                <FlexBox>
+                    <div ref={this.schedulerContainer} style={{width: "100%", height: "100%"}}/>
+                </FlexBox>
+            </FlexBox>
         )
     }
 }
