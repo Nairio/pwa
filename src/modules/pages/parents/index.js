@@ -3,31 +3,20 @@ import {FlexBox, FlexScroll} from "../../templates/flex";
 import Menu from "../../menu/menu";
 import HeaderTitle from "../../header/header-title";
 import Header from "../../header/header";
-import ruLocale from "date-fns/locale/ru";
-
-import {useState} from "react";
-import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
-import DateFnsUtils from '@date-io/date-fns';
-
-const StaticDatePicker = () => {
-    const [date, changeDate] = useState(new Date());
-
-    return (
-        <MuiPickersUtilsProvider  locale={ruLocale} utils={DateFnsUtils}>
-            <DatePicker
-                autoOk
-                orientation=""
-                variant="static"
-                openTo="date"
-                value={date}
-                onChange={changeDate}
-            />
-        </MuiPickersUtilsProvider>
-    );
-};
+import Scheduler from "../../templates/scheduler";
 
 
 export default class Index extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onScheduler = this.onScheduler.bind(this);
+    }
+
+    onScheduler(scheduler){
+        console.log(scheduler);
+        scheduler.init('scheduler_here',new Date(2017,5,30),"year");
+    }
+
     render() {
         return (
             <FlexBox>
@@ -37,7 +26,7 @@ export default class Index extends React.Component {
                 </Header>
                 <FlexScroll>
                     <FlexBox center top>
-                        <StaticDatePicker/>
+                        <Scheduler onScheduler={this.onScheduler}/>
                     </FlexBox>
                 </FlexScroll>
             </FlexBox>
