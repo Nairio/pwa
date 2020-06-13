@@ -49,6 +49,7 @@ import FormPage from "./modules/pages/form/form";
 import ImageIcon from '@material-ui/icons/Image';
 import LoadableImagePage from "./modules/pages/loadable-image/loadable-image";
 import Calendar from "./modules/pages/calendar/calendar";
+import TodayIcon from '@material-ui/icons/Today';
 
 class App extends React.Component {
     constructor(props, context) {
@@ -104,7 +105,7 @@ class App extends React.Component {
 
                 <Divider/>
 
-                <Page title="Календарь" icon={<ImageIcon/>} path="/calendar/" component={Calendar}/>
+                <Page title="Календарь" icon={<TodayIcon/>} path="/calendar/" component={Calendar}/>
                 <Page title="Изображение" icon={<ImageIcon/>} path="/image/" component={LoadableImagePage}/>
                 <Page title="Форма" icon={<ListAltIcon/>} path="/form/" component={FormPage}/>
                 <Page title="Поиск" icon={<SearchIcon/>} path="/search/" component={SearchPage}/>

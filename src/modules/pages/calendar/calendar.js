@@ -1,33 +1,28 @@
 import React from 'react';
-import {FlexBox, FlexScroll} from "../../templates/flex";
+import {FlexBox} from "../../templates/flex";
 import Menu from "../../menu/menu";
 import HeaderTitle from "../../header/header-title";
 import Header from "../../header/header";
 
-import ruLocale from "date-fns/locale/ru";
+import 'dhtmlx-scheduler';
+import 'dhtmlx-scheduler/codebase/dhtmlxscheduler_material.css';
+import "dhtmlx-scheduler/codebase/locale/locale_ru"
 
-import {useState} from "react";
-import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
-import DateFnsUtils from '@date-io/date-fns';
+const scheduler = window.scheduler;
 
-const StaticDatePicker = () => {
-    const [date, changeDate] = useState(new Date());
 
-    return (
-        <MuiPickersUtilsProvider  locale={ruLocale} utils={DateFnsUtils}>
-            <DatePicker
-                autoOk
-                orientation="landscape"
-                variant="static"
-                openTo="date"
-                value={date}
-                onChange={changeDate}
-            />
-        </MuiPickersUtilsProvider>
-    );
-};
 
 export default class Calendar extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.schedulerContainer = React.createRef();
+    }
+
+    componentDidMount() {
+        scheduler.init(this.schedulerContainer.current);
+        window.onresize = () => scheduler.render()
+    }
+
     render() {
         return (
             <FlexBox>
@@ -35,11 +30,9 @@ export default class Calendar extends React.Component {
                     <Menu/>
                     <HeaderTitle>{this.props.title}</HeaderTitle>
                 </Header>
-                <FlexScroll>
-                    <FlexBox center middle>
-                        <StaticDatePicker/>
-                    </FlexBox>
-                </FlexScroll>
+                <FlexBox>
+                    <div ref={this.schedulerContainer} style={{width: "100%", height: "100%"}}/>
+                </FlexBox>
             </FlexBox>
         )
     }
