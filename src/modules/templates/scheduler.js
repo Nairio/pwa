@@ -3,18 +3,14 @@ import "dhtmlx-scheduler";
 import "dhtmlx-scheduler/codebase/dhtmlxscheduler_material.css";
 import "dhtmlx-scheduler/codebase/locale/locale_ru";
 
-const scheduler = window.scheduler;
-
 export default class Scheduler extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.schedulerContainer = React.createRef();
-        this.props.onScheduler(scheduler);
     }
 
     componentDidMount() {
-        scheduler.init(this.schedulerContainer.current);
-        window.onresize = () => scheduler.render()
+        this.props.onScheduler(window.scheduler, this.schedulerContainer.current);
     }
 
     render() {
