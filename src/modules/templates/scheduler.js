@@ -18,7 +18,7 @@ export default class Scheduler extends React.Component {
 
     componentDidMount() {
         const {scheduler} = window;
-        const {start, end} = this.props;
+        const {start = new Date(), end} = this.props;
         scheduler.config.year_x = 1;
         scheduler.config.year_y = start.getMonth() + 1 + Math.floor((end - start) / 1000 / 60 / 60 / 24 / 30);
         scheduler.config.agenda_start = start;
@@ -56,10 +56,12 @@ export default class Scheduler extends React.Component {
     }
 
     render() {
+        const {start = new Date()} = this.props;
+
         const Div = styled.div`
             .dhx_before, .dhx_after {opacity: 0.1} 
             .dhx_year_box {display: none}
-            .dhx_year_box: nth-child(1n + ${this.props.start.getMonth() + 1}) {display: inline-block}
+            .dhx_year_box: nth-child(1n + ${start.getMonth() + 1}) {display: inline-block}
         `;
         return (
             <Div ref={this.schedulerContainer} style={{width: "100%", height: "100%", position: "absolute"}}/>
