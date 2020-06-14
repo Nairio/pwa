@@ -13,7 +13,7 @@ export default class Calendar extends React.Component {
                     <HeaderTitle>{this.props.title}</HeaderTitle>
                 </Header>
                 <FlexBox>
-                    <Scheduler onScheduler={(scheduler, container) => scheduler.init(container,new Date(2017,5,30),"year")}/>
+                    <Scheduler onScheduler={(scheduler) => console.log(scheduler)}/>
                 </FlexBox>
             </FlexBox>
         )
