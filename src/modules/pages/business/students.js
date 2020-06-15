@@ -16,7 +16,7 @@ export default class Students extends React.Component {
     }
 
     componentDidMount() {
-        this.DB = DB("parents", ({data}) => {
+        this.DB = DB("students", ({data}) => {
             const parents = data.reduce((s, {_id, ...item}) => ({...s, [_id]: item}), {});
             this.setState({parents});
         });
