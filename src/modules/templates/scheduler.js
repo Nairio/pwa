@@ -48,6 +48,7 @@ export default class Scheduler extends React.Component {
         scheduler.config.occurrence_timestamp_in_utc = true;
         scheduler.config.include_end_by = true;
         scheduler.config.repeat_precise = true;
+        scheduler.config.header = [];
         scheduler.init(this.schedulerContainer.current);
 
         window.onresize = () => scheduler.render();
