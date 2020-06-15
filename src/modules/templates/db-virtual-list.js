@@ -71,7 +71,7 @@ export default class DBVirtualList extends React.Component {
                         {(term || (!single && data.length > 0)) && <TextField onChange={this.onFilter} fullWidth placeholder="Поиск..."/>}
                     </Grid>
                     <Grid item>
-                        {!single && <Fab size="small" color="secondary" onClick={this.onCreate}><AddIcon/></Fab>}
+                        {!single && fields && <Fab size="small" color="secondary" onClick={this.onCreate}><AddIcon/></Fab>}
                     </Grid>
                 </Grid>
 
@@ -79,7 +79,7 @@ export default class DBVirtualList extends React.Component {
                     <FlexScroll>
                         <FlexBox middle center>
                             <Form item={item} onSubmit={item => this.onClose(isAdd ? this.DB.add(item) : this.DB.change(item))}>
-                                {fields.map(({id, type, title, dbpath, dblabel, options}) => <Field key={id} id={id} type={type} title={title} dbpath={dbpath} dblabel={dblabel} options={options}/>)}
+                                {fields && fields.map(({id, type, title, dbpath, dblabel, options}) => <Field key={id} id={id} type={type} title={title} dbpath={dbpath} dblabel={dblabel} options={options}/>)}
                             </Form>
                         </FlexBox>
                     </FlexScroll>
@@ -92,7 +92,7 @@ export default class DBVirtualList extends React.Component {
                     index={index}
                     modified={modified}
                     divider="inset"
-                    template={(item) => template(item, () => this.onEdit(item))}
+                    template={(item) => template(item, () => fields ? this.onEdit(item) : this.DB.change({...item, _updated: new Date()}))}
                 />
             </FlexBox>
         )
