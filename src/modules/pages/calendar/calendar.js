@@ -3,7 +3,7 @@ import {FlexBox} from "../../templates/flex";
 import Menu from "../../menu/menu";
 import HeaderTitle from "../../header/header-title";
 import Header from "../../header/header";
-import Scheduler from "../../templates/scheduler";
+import DbScheduler from "../../templates/db-scheduler";
 export default class Calendar extends React.Component {
     render() {
         return (
@@ -13,7 +13,7 @@ export default class Calendar extends React.Component {
                     <HeaderTitle>{this.props.title}</HeaderTitle>
                 </Header>
                 <FlexBox>
-                    <Scheduler onScheduler={(scheduler) => console.log(scheduler)}/>
+                    <DbScheduler dbpath="test.calendar" onScheduler={(scheduler) => console.log(scheduler)}/>
                 </FlexBox>
             </FlexBox>
         )

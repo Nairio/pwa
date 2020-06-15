@@ -7,10 +7,13 @@ import "dhtmlx-scheduler/codebase/ext/dhtmlxscheduler_recurring";
 import "dhtmlx-scheduler/codebase/ext/dhtmlxscheduler_agenda_view";
 import "dhtmlx-scheduler/codebase/ext/dhtmlxscheduler_readonly";
 
+//https://docs.dhtmlx.com/scheduler/
+
 
 import styled from "styled-components";
+import {DB} from "../features/firebase";
 
-export default class Scheduler extends React.Component {
+export default class DbScheduler extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.schedulerContainer = React.createRef();
@@ -18,7 +21,7 @@ export default class Scheduler extends React.Component {
 
     componentDidMount() {
         const {scheduler} = window;
-        const {start = new Date(), end} = this.props;
+        const {start = new Date(), end, dbpath} = this.props;
         scheduler.config.year_x = 1;
         scheduler.config.year_y = start.getMonth() + 1 + Math.floor((end - start) / 1000 / 60 / 60 / 24 / 30);
         scheduler.config.agenda_start = start;
@@ -50,6 +53,17 @@ export default class Scheduler extends React.Component {
         scheduler.config.repeat_precise = true;
         scheduler.config.header = [];
         scheduler.init(this.schedulerContainer.current);
+
+        const db = DB(dbpath, ({data}) => scheduler.parse(data));
+        db.load();
+        const prepareItem = ({_start_date, _end_date, _timed, ...item}) => {
+            item.start_date = scheduler.date.date_to_str("%Y-%m-%d %H:%i:%s")(item.start_date);
+            item.end_date = scheduler.date.date_to_str("%Y-%m-%d %H:%i:%s")(item.end_date);
+            return item;
+        };
+        scheduler.attachEvent("onEventAdded", (id, item) => db.add(prepareItem(item)));
+        scheduler.attachEvent("onEventChanged", (id, item) => db.change(prepareItem(item)));
+        scheduler.attachEvent("onEventDeleted", (id, item) => db.delete(prepareItem(item)));
 
         window.onresize = () => scheduler.render();
 
