@@ -8,7 +8,10 @@ import {Auth} from "../../features/firebase";
 export default class Account extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.props.onSubmit((data, answer) => Auth(data).then(({ok, email, name}) => answer(ok, () => this.props.onChange({email, name}))));
+        this.props.onSubmit((data, answer) => {
+            data.type === "logout" && (document.location = document.location.toString());
+            Auth(data).then(({ok, email, name}) => answer(ok, () => this.props.onChange({email, name})))
+        });
     }
 
     render() {
