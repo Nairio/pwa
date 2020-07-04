@@ -50,6 +50,8 @@ import ImageIcon from '@material-ui/icons/Image';
 import LoadableImagePage from "./modules/pages/loadable-image/loadable-image";
 import Calendar from "./modules/pages/calendar/calendar";
 import TodayIcon from '@material-ui/icons/Today';
+import GanttPage from "./modules/pages/gantt/gantt";
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 class App extends React.Component {
     constructor(props, context) {
@@ -105,6 +107,7 @@ class App extends React.Component {
 
                 <Divider/>
 
+                <Page title="План" icon={<AccountTreeIcon/>} path="/gantt/" component={GanttPage}/>
                 <Page title="Календарь" icon={<TodayIcon/>} path="/calendar/" component={Calendar}/>
                 <Page title="Изображение" icon={<ImageIcon/>} path="/image/" component={LoadableImagePage}/>
                 <Page title="Форма" icon={<ListAltIcon/>} path="/form/" component={FormPage}/>
