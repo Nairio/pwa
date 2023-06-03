@@ -34,7 +34,7 @@ export default class Register extends React.Component {
                             <TextField error={this.state.error} variant="outlined" margin="normal" required fullWidth label="Email" name="email" autoComplete="email" onChange={e => this.setState({email: e.target.value})}/>
                             <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Пароль" type="password" autoComplete="current-password" onChange={e => this.setState({password: e.target.value})}/>
                             <Button type="submit" fullWidth variant="contained" color="primary" style={{margin: "16px 0"}}>Зарегистрировать</Button>
-                            <Grid container justify="flex-end">
+                            <Grid container justifyContent="flex-end">
                                 <Grid item><Link href="#" onClick={e => e.preventDefault() || this.props.switch(0)} variant="body2">Войти!</Link></Grid>
                             </Grid>
                         </form>

@@ -55,7 +55,7 @@ export default class Install extends React.Component {
                     width: "100%",
                     bottom: 0
                 }}>
-                    <Grid item xs container justify="center" alignItems="center" spacing={1} onClick={this.installHandler}>
+                    <Grid item xs container justifyContent="center" alignItems="center" spacing={1} onClick={this.installHandler}>
                         <Grid item><CheckCircleIcon/></Grid>
                         <Grid item>{this.state.installing ? "Идёт установка..." : "Установить приложение"}</Grid>
                     </Grid>
